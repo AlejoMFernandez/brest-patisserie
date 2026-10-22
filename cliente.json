@@ -1,0 +1,1407 @@
+{
+ "pais": "AR",
+ "idioma": "es",
+ "modo": "demo",
+ "supabase": {
+  "url": "",
+  "anonKey": ""
+ },
+ "marca": {
+  "logo": "img/logo-brest.svg",
+  "logoPanel": "img/logo-brest-manteca.svg",
+  "favicon": "img/favicon.svg",
+  "colores": {
+   "fondo": "#F7EFF2",
+   "superficie": "#FFFFFF",
+   "texto": "#3A1430",
+   "primario": "#6B2951",
+   "sobrePrimario": "#EBDD8C",
+   "acento": "#EBDD8C",
+   "sobreAcento": "#3A1430",
+   "borde": "#EADBE2"
+  },
+  "fuentes": {
+   "titulos": "'Gloock', Georgia, serif",
+   "texto": "'Nunito Sans', system-ui, sans-serif",
+   "googleFonts": ""
+  },
+  "estilo": {
+   "radio": "22px",
+   "sombra": "suave",
+   "borde": "1.5px",
+   "mayusculas": false
+  }
+ },
+ "modulos": {
+  "carta": true,
+  "carrito": true,
+  "reservas": true,
+  "admin": true
+ },
+ "horarios": {
+  "lun": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "mar": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "mie": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "jue": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "vie": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "sab": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ],
+  "dom": [
+   [
+    "08:00",
+    "21:00"
+   ]
+  ]
+ },
+ "reservas": {
+  "intervaloMin": 60,
+  "duracionMin": 90,
+  "capacidad": 20,
+  "maxPersonas": 12,
+  "anticipacionMin": 120,
+  "diasAdelante": 21,
+  "ultimoTurnoMin": 90,
+  "cerrados": []
+ },
+ "pedidos": {
+  "salidas": [
+   "whatsapp",
+   "mercadopago"
+  ],
+  "tipos": [
+   "retiro"
+  ],
+  "envio": 0,
+  "minimo": 0
+ },
+ "pagos": {
+  "mercadopago": {
+   "endpoint": "https://kit-demos-amf.vercel.app/api/mp-preference",
+   "modo": "sandbox"
+  }
+ },
+ "id": "brest-devoto",
+ "nombre": "Brest Devoto",
+ "whatsapp": "5491140866128",
+ "prefijoPedido": "BD",
+ "textos": {
+  "tuPedido": "Tu bandeja",
+  "verPedido": "Tu bandeja",
+  "agregar": "Sumar",
+  "enviarPedido": "Lo paso a buscar",
+  "pagar": "Pagar con Mercado Pago",
+  "pedidoListo": "¡Ya está en el horno!",
+  "carritoVacio": "Para lo dulce siempre hay lugar.",
+  "carritoVacioSub": "Sumá algo de la carta o armá tu box.",
+  "reservarMesa": "Reservá tu brunch",
+  "confirmarReserva": "Pedir reserva",
+  "comentario": "¿Qué brunch van a pedir? (Aurora, Olivia, Bernarda…)",
+  "notaPedido": "Algo más (dedicatoria, sin TACC, hora de retiro)",
+  "seguir": "Seguir mirando",
+  "sinPrecio": "Consultar",
+  "retiro": "Retiro en Devoto (Av. Francisco Beiró 5031)"
+ },
+ "carta": {
+  "categorias": [
+   {
+    "id": "cafe",
+    "nombre": "Cafetería"
+   },
+   {
+    "id": "especiales",
+    "nombre": "Especiales e infusiones"
+   },
+   {
+    "id": "desayunos",
+    "nombre": "Desayunos y meriendas"
+   },
+   {
+    "id": "brunch",
+    "nombre": "La hora del brunch"
+   },
+   {
+    "id": "dulces",
+    "nombre": "Tortas y tentaciones"
+   },
+   {
+    "id": "laminados",
+    "nombre": "Laminados"
+   },
+   {
+    "id": "salados",
+    "nombre": "Salados y tostados"
+   },
+   {
+    "id": "sanos",
+    "nombre": "Saludables y keto"
+   },
+   {
+    "id": "entrepanes",
+    "nombre": "Entrepanes"
+   },
+   {
+    "id": "ensaladas",
+    "nombre": "Ensaladas y tartas"
+   },
+   {
+    "id": "almuerzos",
+    "nombre": "Almuerzos"
+   },
+   {
+    "id": "pastas",
+    "nombre": "Pastas"
+   },
+   {
+    "id": "bebidas",
+    "nombre": "Bebidas"
+   },
+   {
+    "id": "tortas-enteras",
+    "nombre": "Tortas enteras por encargo"
+   }
+  ],
+  "productos": [
+   {
+    "id": "ristretto",
+    "categoria": "cafe",
+    "nombre": "Ristretto",
+    "descripcion": "Intensidad alta.",
+    "precio": 4300,
+    "etiquetas": []
+   },
+   {
+    "id": "espresso",
+    "categoria": "cafe",
+    "nombre": "Espresso",
+    "descripcion": "Intensidad media.",
+    "precio": 4300,
+    "etiquetas": []
+   },
+   {
+    "id": "americano",
+    "categoria": "cafe",
+    "nombre": "Americano",
+    "descripcion": "Intensidad media.",
+    "precio": 4800,
+    "etiquetas": []
+   },
+   {
+    "id": "cafe-con-leche",
+    "categoria": "cafe",
+    "nombre": "Café con leche",
+    "descripcion": "Intensidad media.",
+    "precio": 6200,
+    "etiquetas": []
+   },
+   {
+    "id": "cafe-doble",
+    "categoria": "cafe",
+    "nombre": "Café doble",
+    "descripcion": "Intensidad alta.",
+    "precio": 6000,
+    "etiquetas": []
+   },
+   {
+    "id": "flat-white",
+    "categoria": "cafe",
+    "nombre": "Flat White",
+    "descripcion": "Intensidad alta.",
+    "precio": 6200,
+    "etiquetas": []
+   },
+   {
+    "id": "latte",
+    "categoria": "cafe",
+    "nombre": "Latte",
+    "descripcion": "Intensidad media.",
+    "precio": 6400,
+    "etiquetas": [],
+    "foto": "img/p/latte.webp"
+   },
+   {
+    "id": "tonic",
+    "categoria": "cafe",
+    "nombre": "Tonic Espresso",
+    "descripcion": "Frío.",
+    "precio": 9000,
+    "etiquetas": []
+   },
+   {
+    "id": "capuccino",
+    "categoria": "especiales",
+    "nombre": "Capuccino",
+    "descripcion": "Frío o caliente.",
+    "precio": 8300,
+    "etiquetas": [],
+    "foto": "img/p/capuccino.webp"
+   },
+   {
+    "id": "capuccino-brest",
+    "categoria": "especiales",
+    "nombre": "Capuccino Brest",
+    "descripcion": "Con crema y dulce de leche.",
+    "precio": 9600,
+    "etiquetas": [
+     "casa"
+    ]
+   },
+   {
+    "id": "saborizado",
+    "categoria": "especiales",
+    "nombre": "Saborizados",
+    "descripcion": "Con o sin leche: caramelo, chocolate, dulce de leche, vainilla, pistacho, leche condensada o licor.",
+    "precio": 9700,
+    "etiquetas": []
+   },
+   {
+    "id": "submarino",
+    "categoria": "especiales",
+    "nombre": "Submarino",
+    "descripcion": "Negro o blanco.",
+    "precio": 7500,
+    "etiquetas": []
+   },
+   {
+    "id": "super-tazon",
+    "categoria": "especiales",
+    "nombre": "Súper Tazón",
+    "descripcion": "750 cc.",
+    "precio": 8500,
+    "etiquetas": []
+   },
+   {
+    "id": "chocolatada",
+    "categoria": "especiales",
+    "nombre": "Chocolatada",
+    "descripcion": "",
+    "precio": 4800,
+    "etiquetas": []
+   },
+   {
+    "id": "te-hebras",
+    "categoria": "especiales",
+    "nombre": "Té en hebras (Tentuh)",
+    "descripcion": "Con o sin leche.",
+    "precio": 6500,
+    "etiquetas": []
+   },
+   {
+    "id": "matcha",
+    "categoria": "especiales",
+    "nombre": "Té Matcha",
+    "descripcion": "Con o sin leche.",
+    "precio": 6500,
+    "etiquetas": []
+   },
+   {
+    "id": "grano-colombiano",
+    "categoria": "cafe",
+    "nombre": "¼ kg Colombiano",
+    "descripcion": "Para llevar, en grano o molido.",
+    "precio": 23000,
+    "etiquetas": []
+   },
+   {
+    "id": "grano-brasilero",
+    "categoria": "cafe",
+    "nombre": "¼ kg Brasilero",
+    "descripcion": "Para llevar, en grano o molido.",
+    "precio": 21000,
+    "etiquetas": []
+   },
+   {
+    "id": "porteno",
+    "categoria": "desayunos",
+    "nombre": "Porteño",
+    "descripcion": "3 medialunas de manteca.",
+    "precio": 14500,
+    "etiquetas": [],
+    "foto": "img/p/jarrito.webp"
+   },
+   {
+    "id": "urbano",
+    "categoria": "desayunos",
+    "nombre": "Urbano",
+    "descripcion": "Tostadas de pan negro o de campo.",
+    "precio": 14000,
+    "etiquetas": [],
+    "foto": "img/p/urbano.webp"
+   },
+   {
+    "id": "frances",
+    "categoria": "desayunos",
+    "nombre": "Francés",
+    "descripcion": "Tostado de miga.",
+    "precio": 16000,
+    "etiquetas": [],
+    "foto": "img/p/frances.webp"
+   },
+   {
+    "id": "del-campo",
+    "categoria": "desayunos",
+    "nombre": "Del Campo",
+    "descripcion": "Súper tazón con tostadas de pan de campo.",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "sacramento",
+    "categoria": "desayunos",
+    "nombre": "Sacramento",
+    "descripcion": "3 medialunas con jamón y queso.",
+    "precio": 17500,
+    "etiquetas": []
+   },
+   {
+    "id": "keto-desayuno",
+    "categoria": "desayunos",
+    "nombre": "Keto",
+    "descripcion": "Pan nube con huevos revueltos (2 unidades).",
+    "precio": 17500,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ],
+    "foto": "img/p/keto-desayuno.webp"
+   },
+   {
+    "id": "saludable",
+    "categoria": "desayunos",
+    "nombre": "Saludable",
+    "descripcion": "Yogur con frutas frescas, granola y miel.",
+    "precio": 15500,
+    "etiquetas": [],
+    "foto": "img/p/saludable.webp"
+   },
+   {
+    "id": "promo-jarrito",
+    "categoria": "desayunos",
+    "nombre": "Promo jarrito",
+    "descripcion": "Americano + medialuna.",
+    "precio": 7200,
+    "etiquetas": []
+   },
+   {
+    "id": "promo-dulce",
+    "categoria": "desayunos",
+    "nombre": "Promo dulce",
+    "descripcion": "Infusión + porción de torta.",
+    "precio": 19500,
+    "etiquetas": [],
+    "foto": "img/p/promo-dulce.webp"
+   },
+   {
+    "id": "aurora",
+    "categoria": "brunch",
+    "nombre": "Aurora",
+    "descripcion": "Scon dulce o de queso, tostado de miga, porción de torta, cookie, dos chipá y porción de budín. Con dos bebidas.",
+    "precio": 60000,
+    "etiquetas": [],
+    "foto": "img/p/aurora.webp"
+   },
+   {
+    "id": "olivia",
+    "categoria": "brunch",
+    "nombre": "Olivia",
+    "descripcion": "Avocado toast, alfajor, porción de torta, cookie, croissant dulce o salado y porción de budín. Con dos bebidas.",
+    "precio": 65000,
+    "etiquetas": [
+     "casa"
+    ],
+    "foto": "img/p/olivia.webp"
+   },
+   {
+    "id": "bernarda",
+    "categoria": "brunch",
+    "nombre": "Bernarda",
+    "descripcion": "Avocado de pan nube, yogur con frutas y miel, porción de torta, alfajor de coco y chipá. Con dos bebidas.",
+    "precio": 55000,
+    "etiquetas": [
+     "sintacc"
+    ],
+    "foto": "img/p/bernarda.webp"
+   },
+   {
+    "id": "porcion-torta",
+    "categoria": "dulces",
+    "nombre": "Porción de torta",
+    "descripcion": "Las tortas del día: preguntá cuáles hay. Hay opciones sin TACC.",
+    "precio": 14500,
+    "etiquetas": [
+     "sintacc"
+    ],
+    "foto": "img/p/porcion.webp"
+   },
+   {
+    "id": "alfajor",
+    "categoria": "dulces",
+    "nombre": "Alfajor artesanal",
+    "descripcion": "",
+    "precio": 5600,
+    "etiquetas": [],
+    "foto": "img/p/alfajor.webp"
+   },
+   {
+    "id": "alfajor-coco",
+    "categoria": "dulces",
+    "nombre": "Alfajor de coco",
+    "descripcion": "",
+    "precio": 4500,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "cuadrados",
+    "categoria": "dulces",
+    "nombre": "Cuadrados dulces",
+    "descripcion": "",
+    "precio": 7500,
+    "etiquetas": []
+   },
+   {
+    "id": "porcion-budin",
+    "categoria": "dulces",
+    "nombre": "Porción de budín",
+    "descripcion": "",
+    "precio": 6000,
+    "etiquetas": [],
+    "foto": "img/p/budin.webp"
+   },
+   {
+    "id": "budin",
+    "categoria": "dulces",
+    "nombre": "Budín",
+    "descripcion": "Entero.",
+    "precio": 15000,
+    "etiquetas": []
+   },
+   {
+    "id": "cookies",
+    "categoria": "dulces",
+    "nombre": "Cookies",
+    "descripcion": "Nutella, red velvet, vainilla o chocolate.",
+    "precio": 7600,
+    "etiquetas": [],
+    "foto": "img/p/cookies.webp"
+   },
+   {
+    "id": "scon-dulce",
+    "categoria": "dulces",
+    "nombre": "Scon dulce",
+    "descripcion": "",
+    "precio": 4500,
+    "etiquetas": []
+   },
+   {
+    "id": "scon-queso",
+    "categoria": "dulces",
+    "nombre": "Scon de queso",
+    "descripcion": "Con dip de queso crema.",
+    "precio": 6500,
+    "etiquetas": []
+   },
+   {
+    "id": "chipa",
+    "categoria": "dulces",
+    "nombre": "Chipá",
+    "descripcion": "",
+    "precio": 3200,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "french-frutos-rojos",
+    "categoria": "dulces",
+    "nombre": "French toast con frutos rojos",
+    "descripcion": "",
+    "precio": 7900,
+    "etiquetas": [],
+    "foto": "img/p/french-frutos.webp"
+   },
+   {
+    "id": "french-frutos-secos",
+    "categoria": "dulces",
+    "nombre": "French toast con frutos secos",
+    "descripcion": "",
+    "precio": 7900,
+    "etiquetas": []
+   },
+   {
+    "id": "medialuna",
+    "categoria": "laminados",
+    "nombre": "Medialuna",
+    "descripcion": "De manteca.",
+    "precio": 2600,
+    "etiquetas": [],
+    "foto": "img/p/jarrito.webp"
+   },
+   {
+    "id": "medialuna-toppings",
+    "categoria": "laminados",
+    "nombre": "Medialuna con toppings",
+    "descripcion": "Pistacho, frutos rojos o cremoso de dulce de leche.",
+    "precio": 4000,
+    "etiquetas": []
+   },
+   {
+    "id": "roll-canela",
+    "categoria": "laminados",
+    "nombre": "Roll de canela",
+    "descripcion": "Glaseado o con salsa de chocolate o pistacho.",
+    "precio": 6100,
+    "etiquetas": [],
+    "foto": "img/p/roll-canela.webp"
+   },
+   {
+    "id": "croissant",
+    "categoria": "laminados",
+    "nombre": "Croissant",
+    "descripcion": "",
+    "precio": 7000,
+    "etiquetas": [],
+    "foto": "img/p/croissant.webp"
+   },
+   {
+    "id": "croissant-toppings",
+    "categoria": "laminados",
+    "nombre": "Croissant con toppings",
+    "descripcion": "Pistacho, frutos rojos o cremoso de dulce de leche.",
+    "precio": 7600,
+    "etiquetas": []
+   },
+   {
+    "id": "pan-chocolate",
+    "categoria": "laminados",
+    "nombre": "Pan de chocolate",
+    "descripcion": "",
+    "precio": 7000,
+    "etiquetas": [],
+    "foto": "img/p/pan-chocolate.webp"
+   },
+   {
+    "id": "docena-medialunas",
+    "categoria": "laminados",
+    "nombre": "Docena de medialunas",
+    "descripcion": "",
+    "precio": 28000,
+    "etiquetas": [],
+    "foto": "img/p/docena.webp"
+   },
+   {
+    "id": "tostado-campo",
+    "categoria": "salados",
+    "nombre": "Tostado de pan de campo",
+    "descripcion": "",
+    "precio": 13500,
+    "etiquetas": []
+   },
+   {
+    "id": "arabe",
+    "categoria": "salados",
+    "nombre": "Árabe",
+    "descripcion": "",
+    "precio": 12500,
+    "etiquetas": []
+   },
+   {
+    "id": "croissant-jyq",
+    "categoria": "salados",
+    "nombre": "Croissant con jamón y queso",
+    "descripcion": "",
+    "precio": 9500,
+    "etiquetas": []
+   },
+   {
+    "id": "tostado-miga",
+    "categoria": "salados",
+    "nombre": "Tostado de miga",
+    "descripcion": "3 unidades.",
+    "precio": 10900,
+    "etiquetas": [],
+    "foto": "img/p/tostado-miga.webp"
+   },
+   {
+    "id": "sandwich-chipa",
+    "categoria": "salados",
+    "nombre": "Sándwich de chipá",
+    "descripcion": "Relleno de jamón.",
+    "precio": 9500,
+    "etiquetas": []
+   },
+   {
+    "id": "keto-sandwich",
+    "categoria": "salados",
+    "nombre": "Keto sándwich",
+    "descripcion": "Jamón y queso, untado con queso crema.",
+    "precio": 14500,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ]
+   },
+   {
+    "id": "scon-sandwich",
+    "categoria": "salados",
+    "nombre": "Scon sándwich",
+    "descripcion": "Jamón crudo, queso crema y rúcula.",
+    "precio": 15500,
+    "etiquetas": []
+   },
+   {
+    "id": "avocado-toast",
+    "categoria": "salados",
+    "nombre": "Avocado toast",
+    "descripcion": "",
+    "precio": 15900,
+    "etiquetas": [
+     "veggie"
+    ],
+    "foto": "img/p/avocado.webp"
+   },
+   {
+    "id": "tostones-maximo",
+    "categoria": "salados",
+    "nombre": "Tostón Máximo",
+    "descripcion": "Con queso danbo flambeado: huevos revueltos con jamón y parmesano.",
+    "precio": 17000,
+    "etiquetas": []
+   },
+   {
+    "id": "tostones-alfredo",
+    "categoria": "salados",
+    "nombre": "Tostón Alfredo",
+    "descripcion": "Con queso danbo flambeado: pollo grillé y cebollas caramelizadas.",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "tostones-carmy",
+    "categoria": "salados",
+    "nombre": "Tostón Carmy",
+    "descripcion": "Con queso danbo flambeado: champignons salteados, queso azul y rúcula.",
+    "precio": 18000,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "yogurt",
+    "categoria": "sanos",
+    "nombre": "Yogur con frutas",
+    "descripcion": "Frutas frescas, granola y miel.",
+    "precio": 12000,
+    "etiquetas": [],
+    "foto": "img/p/saludable.webp"
+   },
+   {
+    "id": "huevos-revueltos",
+    "categoria": "sanos",
+    "nombre": "Huevos revueltos",
+    "descripcion": "",
+    "precio": 6500,
+    "etiquetas": [],
+    "foto": "img/p/huevos.webp"
+   },
+   {
+    "id": "tostadas-negro",
+    "categoria": "sanos",
+    "nombre": "Tostadas de pan negro",
+    "descripcion": "2 unidades.",
+    "precio": 6000,
+    "etiquetas": []
+   },
+   {
+    "id": "pan-nube-huevos",
+    "categoria": "sanos",
+    "nombre": "Pan nube con queso crema y huevos revueltos",
+    "descripcion": "",
+    "precio": 12000,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ],
+    "foto": "img/p/pan-nube-keto.webp"
+   },
+   {
+    "id": "pan-chocolate-keto",
+    "categoria": "sanos",
+    "nombre": "Pan de chocolate keto",
+    "descripcion": "Con queso crema y mermelada sin azúcar.",
+    "precio": 8500,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ]
+   },
+   {
+    "id": "brownie-keto",
+    "categoria": "sanos",
+    "nombre": "Brownie keto",
+    "descripcion": "Con crema y frutos rojos.",
+    "precio": 9000,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ]
+   },
+   {
+    "id": "pan-nube-frutos",
+    "categoria": "sanos",
+    "nombre": "Pan nube con crema y frutos rojos",
+    "descripcion": "",
+    "precio": 8500,
+    "etiquetas": [
+     "keto",
+     "sintacc"
+    ]
+   },
+   {
+    "id": "ep-clasico",
+    "categoria": "entrepanes",
+    "nombre": "Clásico",
+    "descripcion": "Jamón cocido y queso.",
+    "precio": 12000,
+    "etiquetas": []
+   },
+   {
+    "id": "ep-parme",
+    "categoria": "entrepanes",
+    "nombre": "Parme",
+    "descripcion": "Jamón crudo, parmesano y rúcula.",
+    "precio": 16500,
+    "etiquetas": []
+   },
+   {
+    "id": "ep-pollo",
+    "categoria": "entrepanes",
+    "nombre": "Pollo",
+    "descripcion": "Pechuga de pollo, tomate, lechuga y queso.",
+    "precio": 17000,
+    "etiquetas": [],
+    "foto": "img/p/pollo-ep.webp"
+   },
+   {
+    "id": "ep-americano",
+    "categoria": "entrepanes",
+    "nombre": "Americano",
+    "descripcion": "Queso danbo, olivas negras, pepinillos, huevo y aderezo agridulce.",
+    "precio": 15500,
+    "etiquetas": []
+   },
+   {
+    "id": "ep-atun",
+    "categoria": "entrepanes",
+    "nombre": "Atún",
+    "descripcion": "Lomos de atún al natural, queso danbo, lechuga y tomates cherry.",
+    "precio": 15500,
+    "etiquetas": []
+   },
+   {
+    "id": "ep-vegan",
+    "categoria": "entrepanes",
+    "nombre": "Vegan",
+    "descripcion": "Palta, berenjenas al escabeche, aceitunas verdes, choclo y rúcula.",
+    "precio": 16500,
+    "etiquetas": [
+     "veggie"
+    ],
+    "foto": "img/p/vegan.webp"
+   },
+   {
+    "id": "miga",
+    "categoria": "entrepanes",
+    "nombre": "Sándwich de miga",
+    "descripcion": "",
+    "precio": 3500,
+    "etiquetas": []
+   },
+   {
+    "id": "cesar",
+    "categoria": "ensaladas",
+    "nombre": "César",
+    "descripcion": "Lechuga, pollo, croutons, parmesano y aderezo césar.",
+    "precio": 15000,
+    "etiquetas": []
+   },
+   {
+    "id": "pollo-blue",
+    "categoria": "ensaladas",
+    "nombre": "Pollo blue",
+    "descripcion": "Mix de verdes, tomates cherry, queso azul, choclo y almendras tostadas.",
+    "precio": 15500,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "veggie",
+    "categoria": "ensaladas",
+    "nombre": "Veggie",
+    "descripcion": "Mix de lechugas, rúcula, tomates cherry, aceitunas, choclo, arvejas y semillas.",
+    "precio": 15000,
+    "etiquetas": [
+     "veggie",
+     "sintacc"
+    ]
+   },
+   {
+    "id": "gourmet",
+    "categoria": "ensaladas",
+    "nombre": "Gourmet",
+    "descripcion": "Jamón crudo, tomates cherry, frutos secos, croutons, parmesano y lechuga.",
+    "precio": 16000,
+    "etiquetas": [],
+    "foto": "img/p/gourmet.webp"
+   },
+   {
+    "id": "tuna",
+    "categoria": "ensaladas",
+    "nombre": "Tuna",
+    "descripcion": "Lomos de atún, arroz, tomates cherry, choclo, arvejas, queso danbo y rúcula.",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "tarta-calabaza",
+    "categoria": "ensaladas",
+    "nombre": "Tarta de calabaza",
+    "descripcion": "Con mix de verdes y tomates cherry.",
+    "precio": 14500,
+    "etiquetas": [
+     "veggie"
+    ],
+    "foto": "img/p/tarta-calabaza.webp"
+   },
+   {
+    "id": "tarta-tricolor",
+    "categoria": "ensaladas",
+    "nombre": "Tarta tricolor",
+    "descripcion": "Calabaza, acelga y ricota.",
+    "precio": 14500,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "tarta-zapallito",
+    "categoria": "ensaladas",
+    "nombre": "Tarta de zapallito",
+    "descripcion": "Con masa integral.",
+    "precio": 14500,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "tarta-jyq",
+    "categoria": "ensaladas",
+    "nombre": "Tarta de jamón y queso",
+    "descripcion": "",
+    "precio": 15400,
+    "etiquetas": [],
+    "foto": "img/p/tartas.webp"
+   },
+   {
+    "id": "tarta-pollo",
+    "categoria": "ensaladas",
+    "nombre": "Tarta de pollo y puerro",
+    "descripcion": "",
+    "precio": 15500,
+    "etiquetas": []
+   },
+   {
+    "id": "tortilla-papa",
+    "categoria": "ensaladas",
+    "nombre": "Tortilla de papa",
+    "descripcion": "",
+    "precio": 13500,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "tortilla-verdura",
+    "categoria": "ensaladas",
+    "nombre": "Tortilla de verdura",
+    "descripcion": "",
+    "precio": 13500,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "milanesa",
+    "categoria": "almuerzos",
+    "nombre": "Milanesa de peceto",
+    "descripcion": "Con guarnición.",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "suprema",
+    "categoria": "almuerzos",
+    "nombre": "Suprema de pollo",
+    "descripcion": "Con guarnición.",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "pizza",
+    "categoria": "almuerzos",
+    "nombre": "Pizza individual",
+    "descripcion": "Con 2 toppings a elección.",
+    "precio": 15000,
+    "etiquetas": []
+   },
+   {
+    "id": "medallones",
+    "categoria": "almuerzos",
+    "nombre": "Medallones veganos",
+    "descripcion": "Con guarnición.",
+    "precio": 17000,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "sopa",
+    "categoria": "almuerzos",
+    "nombre": "Sopa crema",
+    "descripcion": "De arvejas o calabaza, con croutons.",
+    "precio": 15000,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "bondiola-limon",
+    "categoria": "almuerzos",
+    "nombre": "Bondiola al limón",
+    "descripcion": "Con guarnición.",
+    "precio": 17000,
+    "etiquetas": []
+   },
+   {
+    "id": "bondiola-bbq",
+    "categoria": "almuerzos",
+    "nombre": "Bondiola a la barbacoa",
+    "descripcion": "Con guarnición.",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "bondiola-mostaza",
+    "categoria": "almuerzos",
+    "nombre": "Bondiola a la mostaza dulce",
+    "descripcion": "Con guarnición.",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "risotto",
+    "categoria": "almuerzos",
+    "nombre": "Risotto de hongos",
+    "descripcion": "",
+    "precio": 17000,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "salteado",
+    "categoria": "almuerzos",
+    "nombre": "Salteado de arroz con vegetales",
+    "descripcion": "",
+    "precio": 16000,
+    "etiquetas": [
+     "veggie"
+    ]
+   },
+   {
+    "id": "vacio",
+    "categoria": "almuerzos",
+    "nombre": "Vacío al horno",
+    "descripcion": "Con guarnición.",
+    "precio": 19000,
+    "etiquetas": []
+   },
+   {
+    "id": "pollo-verdeo",
+    "categoria": "almuerzos",
+    "nombre": "Pechuga de pollo al verdeo",
+    "descripcion": "Con guarnición.",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "pollo-limon",
+    "categoria": "almuerzos",
+    "nombre": "Pechuga de pollo al limón",
+    "descripcion": "Con guarnición.",
+    "precio": 17000,
+    "etiquetas": []
+   },
+   {
+    "id": "pollo-disco",
+    "categoria": "almuerzos",
+    "nombre": "Pollo al disco",
+    "descripcion": "",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "cuadril",
+    "categoria": "almuerzos",
+    "nombre": "Colita de cuadril a la mostaza",
+    "descripcion": "Con guarnición.",
+    "precio": 19000,
+    "etiquetas": []
+   },
+   {
+    "id": "salmon-quesos",
+    "categoria": "almuerzos",
+    "nombre": "Salmón a los cuatro quesos",
+    "descripcion": "",
+    "precio": 25000,
+    "etiquetas": []
+   },
+   {
+    "id": "salmon-limon",
+    "categoria": "almuerzos",
+    "nombre": "Salmón al limón",
+    "descripcion": "",
+    "precio": 23000,
+    "etiquetas": []
+   },
+   {
+    "id": "brotola",
+    "categoria": "almuerzos",
+    "nombre": "Brótola al limón",
+    "descripcion": "",
+    "precio": 17000,
+    "etiquetas": []
+   },
+   {
+    "id": "merluza",
+    "categoria": "almuerzos",
+    "nombre": "Filete de merluza",
+    "descripcion": "",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "calamares",
+    "categoria": "almuerzos",
+    "nombre": "Arroz con calamares",
+    "descripcion": "",
+    "precio": 18000,
+    "etiquetas": []
+   },
+   {
+    "id": "noquis",
+    "categoria": "pastas",
+    "nombre": "Ñoquis de papa",
+    "descripcion": "",
+    "precio": 14000,
+    "etiquetas": []
+   },
+   {
+    "id": "noquis-sintacc",
+    "categoria": "pastas",
+    "nombre": "Ñoquis sin TACC",
+    "descripcion": "",
+    "precio": 17000,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "spaghetti",
+    "categoria": "pastas",
+    "nombre": "Spaghetti",
+    "descripcion": "",
+    "precio": 14000,
+    "etiquetas": [],
+    "foto": "img/p/spaghetti.webp"
+   },
+   {
+    "id": "spaghetti-sintacc",
+    "categoria": "pastas",
+    "nombre": "Spaghetti sin TACC",
+    "descripcion": "",
+    "precio": 17000,
+    "etiquetas": [
+     "sintacc"
+    ]
+   },
+   {
+    "id": "fuccile",
+    "categoria": "pastas",
+    "nombre": "Fusilli",
+    "descripcion": "",
+    "precio": 15000,
+    "etiquetas": []
+   },
+   {
+    "id": "sorrentinos",
+    "categoria": "pastas",
+    "nombre": "Sorrentinos de muzzarella y jamón",
+    "descripcion": "",
+    "precio": 18000,
+    "etiquetas": [],
+    "foto": "img/p/sorrentinos.webp"
+   },
+   {
+    "id": "ravioles",
+    "categoria": "pastas",
+    "nombre": "Ravioles de ricota o verdura",
+    "descripcion": "",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "fideos-rellenos",
+    "categoria": "pastas",
+    "nombre": "Fideos rellenos",
+    "descripcion": "Pollo y verdura.",
+    "precio": 17000,
+    "etiquetas": []
+   },
+   {
+    "id": "salsa-simple",
+    "categoria": "pastas",
+    "nombre": "Salsa fileto, crema, mixta o pesto",
+    "descripcion": "",
+    "precio": 2500,
+    "etiquetas": []
+   },
+   {
+    "id": "salsa-bolognesa",
+    "categoria": "pastas",
+    "nombre": "Salsa bolognesa",
+    "descripcion": "",
+    "precio": 4500,
+    "etiquetas": []
+   },
+   {
+    "id": "fingers",
+    "categoria": "pastas",
+    "nombre": "Menú infantil",
+    "descripcion": "Fingers de pollo caseros con puré, con regalo sorpresa.",
+    "precio": 16000,
+    "etiquetas": []
+   },
+   {
+    "id": "gaseosa",
+    "categoria": "bebidas",
+    "nombre": "Gaseosas",
+    "descripcion": "",
+    "precio": 4500,
+    "etiquetas": []
+   },
+   {
+    "id": "agua",
+    "categoria": "bebidas",
+    "nombre": "Agua con o sin gas",
+    "descripcion": "",
+    "precio": 4100,
+    "etiquetas": []
+   },
+   {
+    "id": "agua-saborizada",
+    "categoria": "bebidas",
+    "nombre": "Agua saborizada",
+    "descripcion": "",
+    "precio": 3500,
+    "etiquetas": []
+   },
+   {
+    "id": "cerveza",
+    "categoria": "bebidas",
+    "nombre": "Cerveza 473 cc",
+    "descripcion": "",
+    "precio": 7500,
+    "etiquetas": []
+   },
+   {
+    "id": "exprimido",
+    "categoria": "bebidas",
+    "nombre": "Exprimido de naranja",
+    "descripcion": "",
+    "precio": 7700,
+    "etiquetas": []
+   },
+   {
+    "id": "licuado",
+    "categoria": "bebidas",
+    "nombre": "Licuado",
+    "descripcion": "Con agua o leche.",
+    "precio": 8500,
+    "etiquetas": []
+   },
+   {
+    "id": "limonada",
+    "categoria": "bebidas",
+    "nombre": "Limonada con menta y jengibre",
+    "descripcion": "",
+    "precio": 8200,
+    "etiquetas": []
+   },
+   {
+    "id": "limonada-frutilla",
+    "categoria": "bebidas",
+    "nombre": "Limonada de frutilla",
+    "descripcion": "",
+    "precio": 8800,
+    "etiquetas": []
+   },
+   {
+    "id": "frapuccino",
+    "categoria": "bebidas",
+    "nombre": "Frapuccino",
+    "descripcion": "Dulce de leche, caramelo, chocolate, vainilla o Nutella.",
+    "precio": 11700,
+    "etiquetas": [],
+    "foto": "img/p/frapuccino.webp"
+   },
+   {
+    "id": "torta-red-velvet",
+    "categoria": "tortas-enteras",
+    "nombre": "Red Velvet",
+    "descripcion": "Bizcocho húmedo rojo y frosting de queso crema.",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/red-velvet.webp"
+   },
+   {
+    "id": "torta-rogel",
+    "categoria": "tortas-enteras",
+    "nombre": "Súper Rogel",
+    "descripcion": "6 capas de dulce de leche y merengue suave.",
+    "precio": null,
+    "etiquetas": [
+     "casa"
+    ],
+    "foto": "img/t/rogel.webp"
+   },
+   {
+    "id": "torta-oreo",
+    "categoria": "tortas-enteras",
+    "nombre": "Oreo",
+    "descripcion": "Capas de Oreo, crema y dulce de leche.",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/oreo.webp"
+   },
+   {
+    "id": "torta-chocobrest",
+    "categoria": "tortas-enteras",
+    "nombre": "Chocobrest",
+    "descripcion": "Chocolinas y cremoso de dulce de leche.",
+    "precio": null,
+    "etiquetas": [
+     "casa"
+    ],
+    "foto": "img/t/chocobrest.webp"
+   },
+   {
+    "id": "torta-bruce",
+    "categoria": "tortas-enteras",
+    "nombre": "Bruce",
+    "descripcion": "Bizcocho de chocolate esponjoso con relleno chocolatoso.",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/bruce.webp"
+   },
+   {
+    "id": "torta-franui",
+    "categoria": "tortas-enteras",
+    "nombre": "Franui",
+    "descripcion": "Mousse de chocolate blanco con bombones de frambuesa.",
+    "precio": null,
+    "etiquetas": [
+     "sintacc"
+    ],
+    "foto": "img/t/franui.webp"
+   },
+   {
+    "id": "torta-kinder",
+    "categoria": "tortas-enteras",
+    "nombre": "Cheesecake Kinder",
+    "descripcion": "Suave y esponjosa, con lluvia de Kinder.",
+    "precio": null,
+    "etiquetas": [
+     "sintacc"
+    ],
+    "foto": "img/t/kinder.webp"
+   },
+   {
+    "id": "torta-banana-split",
+    "categoria": "tortas-enteras",
+    "nombre": "Cheesecake banana split",
+    "descripcion": "Con bananas frescas, sin esencias ni gelatina.",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/banana-split.webp"
+   },
+   {
+    "id": "torta-pistacho",
+    "categoria": "tortas-enteras",
+    "nombre": "Cheesecake de pistacho",
+    "descripcion": "",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/pistacho.webp"
+   },
+   {
+    "id": "torta-brownie",
+    "categoria": "tortas-enteras",
+    "nombre": "Brownie con dulce de leche y merengue",
+    "descripcion": "",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/brownie-merengue.webp"
+   },
+   {
+    "id": "torta-frutos-bosque",
+    "categoria": "tortas-enteras",
+    "nombre": "Cheesecake de frutos del bosque",
+    "descripcion": "",
+    "precio": null,
+    "etiquetas": [],
+    "foto": "img/t/frutos-bosque.webp"
+   }
+  ]
+ }
+}

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brest Patisserie · Pastelería artesanal en Devoto y Villa Luro</title>
+<meta name="description" content="Tortas altas, laminados, brunch y opciones sin TACC y keto. Pedí para retirar, encargá tu torta o armá un box de regalo. Devoto y Villa Luro, todos los días de 8 a 21.">
+<meta name="theme-color" content="#6B2951">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://brest-patisserie.vercel.app/">
+<meta property="og:title" content="Brest Patisserie · Para lo dulce siempre hay lugar">
+<meta property="og:description" content="Tortas altas, laminados y brunch en Devoto y Villa Luro. Pedí para retirar o encargá tu torta.">
+<meta property="og:image" content="https://brest-patisserie.vercel.app/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    var d = document.documentElement, s = null;
+    try { s = sessionStorage.getItem('brest:sinIntro'); sessionStorage.removeItem('brest:sinIntro'); } catch (e) {}
+    var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    d.classList.add('js');
+    if (!s && !rm) d.classList.add('con-intro');
+  })();
+</script>
+<link rel="preload" href="fonts/gloock.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/nunito-sans.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" as="image" href="img/hero-rogel-800.webp" type="image/webp">
+<link rel="stylesheet" href="kit/kit.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__stage">
+    <svg class="intro__arco" viewBox="0 0 220 300" fill="none"><path d="M20 290V110a90 90 0 0 1 180 0v180" pathLength="1"/></svg>
+    <div class="intro__ventana"><img src="img/hero-rogel-800.webp" alt=""></div>
+    <img class="intro__marca" src="img/logo-brest-manteca.svg" alt="">
+    <span class="intro__pat">PATISSERIE</span>
+  </div>
+</div>
+
+<a class="saltar" href="#carta">Ir a la carta</a>
+
+<header class="barra" id="barra">
+  <a class="barra__logo" href="#inicio" aria-label="Brest Patisserie, inicio"><img src="img/logo-brest.svg" alt="brest" width="96" height="25"></a>
+  <nav class="barra__nav" aria-label="Secciones">
+    <a href="#vitrina">Vitrina</a><a href="#carta">Carta</a><a href="#box">Boxes</a><a href="#beneficios">Beneficios</a><a href="#brunch">Brunch</a><a href="#locales">Locales</a>
+  </nav>
+  <div class="barra__acc">
+    <a class="btn btn--chico" href="#carta">Pedir</a>
+    <button class="redondo" id="abrirMenu" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="menu" id="menu" aria-label="Secciones" hidden>
+  <div class="menu__top">
+    <img src="img/logo-brest-manteca.svg" alt="brest" width="96" height="25">
+    <button class="redondo redondo--claro" id="cerrarMenu" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <ul class="menu__links">
+    <li style="--d:0"><a href="#vitrina">La vitrina</a></li>
+    <li style="--d:1"><a href="#carta">La carta</a></li>
+    <li style="--d:2"><a href="#box">Armá tu box</a></li>
+    <li style="--d:3"><a href="#beneficios">Beneficios</a></li>
+    <li style="--d:4"><a href="#brunch">Brunch</a></li>
+    <li style="--d:5"><a href="#locales">Los locales</a></li>
+  </ul>
+  <div class="menu__pie">
+    <p class="etq etq--manteca">Estás viendo</p>
+    <div class="seg seg--oscuro" role="group" aria-label="Elegí local">
+      <button type="button" data-local="devoto">Devoto</button>
+      <button type="button" data-local="luro">Villa Luro</button>
+    </div>
+  </div>
+</nav>
+
+<main id="inicio">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="hero__foto">
+      <span class="hero__arco" aria-hidden="true"></span>
+      <picture>
+        <source media="(min-width: 900px)" srcset="img/hero-rogel-1200.webp">
+        <img src="img/hero-rogel-800.webp" alt="Súper Rogel de seis capas con merengue" width="800" height="930" fetchpriority="high">
+      </picture>
+      <a class="sello" href="#vitrina" aria-label="Hoy hay rogel: ver la vitrina"><span>HOY HAY</span><b>rogel</b></a>
+    </div>
+    <div class="hero__txt">
+      <p class="etq hero__etq" style="--d:1">Patisserie · Devoto · Villa Luro</p>
+      <h1 id="hero-t" class="hero__t">
+        <span class="linea"><span style="--d:2">Para lo dulce</span></span>
+        <span class="linea"><span style="--d:3">siempre hay lugar.</span></span>
+      </h1>
+      <p class="hero__p" style="--d:4">Tortas altas, laminados y brunch hechos acá. Con opciones sin TACC y keto.</p>
+      <div class="hero__btns" style="--d:5">
+        <a class="btn" href="#vitrina">Encargá tu torta</a>
+        <a class="btn btn--linea" href="#carta">Ver la carta</a>
+      </div>
+      <div class="chips" style="--d:6">
+        <span class="chip chip--blanco" id="estado"><i class="punto"></i>Todos los días · 8 a 21 h</span>
+        <span class="chip chip--manteca">Sin TACC</span>
+        <span class="chip chip--rosa">Keto</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIZARRA -->
+  <section class="pizarra-wrap" aria-label="Aviso del día">
+    <div class="pizarra" id="pizarra" aria-live="polite">
+      <p class="pizarra__l" data-l="0"></p>
+      <p class="pizarra__l" data-l="1"></p>
+      <p class="pizarra__l pizarra__l--chica" data-l="2"></p>
+    </div>
+    <a class="pizarra__btn" id="pizarraBtn" href="#carta">Ver en la carta <span aria-hidden="true">→</span></a>
+  </section>
+
+  <!-- VITRINA -->
+  <section class="vitrina" id="vitrina" aria-labelledby="vitrina-t">
+    <div class="cont">
+      <p class="etq etq--manteca rev">La vitrina</p>
+      <h2 id="vitrina-t" class="t2 t2--manteca rev">Tortas enteras para encargar</h2>
+      <p class="lead lead--claro rev">Deslizá como si caminaras frente a la vitrina. Tocá una para ver qué tiene y encargala para el día que quieras.</p>
+    </div>
+    <div class="fila fila--vitrina" id="filaVitrina" tabindex="0" aria-label="Tortas enteras, deslizá para ver más"></div>
+    <div class="cont vitrina__pie rev">
+      <div class="flechas">
+        <button class="redondo redondo--claro" data-mover="-1" aria-label="Torta anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="redondo redondo--claro" data-mover="1" aria-label="Torta siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <p class="vitrina__nota">También hacemos tortas temáticas para cumples. Contanos la idea al encargar.</p>
+    </div>
+  </section>
+
+  <!-- CARTA -->
+  <section class="carta" id="carta" aria-labelledby="carta-t">
+    <div class="cont carta__cab">
+      <div>
+        <p class="etq rev">Para comer acá o retirar</p>
+        <h2 id="carta-t" class="t2 rev">La carta</h2>
+      </div>
+      <div class="seg rev" role="group" aria-label="Elegí local">
+        <button type="button" data-local="devoto">Devoto</button>
+        <button type="button" data-local="luro">Villa Luro</button>
+      </div>
+    </div>
+    <p class="cont carta__nota rev" id="cartaNota"></p>
+    <div class="cont">
+      <div class="carta__kit" data-kit="carta"></div>
+      <nav class="carta__nav" id="cartaNav" aria-label="Secciones de la carta">
+        <button class="btn btn--linea btn--chico" data-paso="-1"><span aria-hidden="true">‹</span> <span data-nom></span></button>
+        <button class="btn btn--linea btn--chico" data-paso="1"><span data-nom></span> <span aria-hidden="true">›</span></button>
+      </nav>
+    </div>
+  </section>
+
+  <!-- BOX -->
+  <section class="box" id="box" aria-labelledby="box-t">
+    <div class="cont box__grid">
+      <div class="box__txt">
+        <p class="etq rev">Para regalar</p>
+        <h2 id="box-t" class="t2 rev">Armá tu box</h2>
+        <p class="lead rev">Tocá lo que quieras y cae a la caja (o arrastralo). Con 3 ya se puede cerrar; entran 6.</p>
+        <div class="box__opts rev" id="boxOpts" role="list"></div>
+      </div>
+      <div class="box__lado">
+        <div class="caja rev" id="caja" aria-live="polite">
+          <div class="caja__tapa" aria-hidden="true"><img src="img/logo-brest-manteca.svg" alt=""></div>
+          <div class="caja__cuerpo">
+            <img class="caja__logo" src="img/logo-brest-manteca.svg" alt="" aria-hidden="true">
+            <div class="caja__slots" id="slots"></div>
+          </div>
+          <span class="caja__mono" aria-hidden="true"></span>
+        </div>
+        <p class="caja__estado" id="cajaEstado">Elegí 6 cosas ricas.</p>
+        <div class="dedic" id="dedic" hidden>
+          <label for="dedicTxt">Tarjeta con dedicatoria</label>
+          <textarea id="dedicTxt" rows="2" maxlength="140" placeholder="Feliz cumple, ma. Para lo dulce siempre hay lugar."></textarea>
+        </div>
+        <div class="box__acc">
+          <button class="btn btn--linea" id="boxVaciar" type="button">Vaciar</button>
+          <button class="btn" id="boxCerrar" type="button" disabled>Cerrar la caja</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="benef" id="beneficios" aria-labelledby="benef-t">
+    <div class="cont benef__grid">
+      <div>
+        <p class="etq etq--manteca rev">Beneficios</p>
+        <h2 id="benef-t" class="t2 t2--manteca rev">La tarjeta que se sella</h2>
+        <p class="lead lead--claro rev">Tomás 4 cafés y el quinto va por la casa. Completás otros 4 y te regalamos café con medialuna. Tocá la tarjeta y probá.</p>
+      </div>
+      <div class="tarjeta-wrap rev">
+        <button class="tarjeta" id="tarjeta" type="button" aria-label="Sellar la tarjeta de fidelidad">
+          <img src="img/logo-brest.svg" alt="" class="tarjeta__logo">
+          <span class="tarjeta__t">TARJETA DE FIDELIDAD</span>
+          <span class="tarjeta__sellos" id="sellos">
+            <i></i><i></i><i></i><i></i><i class="gratis">GRATIS</i>
+          </span>
+          <span class="tarjeta__msg" id="tarjetaMsg">Tocá para sellar</span>
+        </button>
+      </div>
+    </div>
+    <ul class="cont beneficios">
+      <li class="rev" style="--d:0"><b>Miércoles mujer</b><span>20 % de descuento en la mesa de mujeres, con cualquier medio de pago.</span></li>
+      <li class="rev" style="--d:1"><b>Tu cumple</b><span>La porción para soplar la velita va de regalo. Traé el DNI.</span></li>
+      <li class="rev" style="--d:2"><b>Efectivo</b><span>10 % de descuento pagando en efectivo.</span></li>
+    </ul>
+  </section>
+
+  <!-- SIN TACC -->
+  <section class="sintacc" aria-labelledby="st-t">
+    <div class="cont sintacc__in">
+      <span class="sello-st rev" aria-hidden="true">SIN<br>TACC</span>
+      <div>
+        <h2 id="st-t" class="t3 rev">Sin TACC y keto, en todas las secciones</h2>
+        <p class="rev">Tortas como la Franui o la Kinder, pan nube, chipá, alfajor de coco, brunch Bernarda y más.</p>
+      </div>
+      <div class="sintacc__btns rev">
+        <button class="btn" type="button" data-lista="sintacc">Ver todo sin TACC</button>
+        <button class="btn btn--linea" type="button" data-lista="keto">Ver keto</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRUNCH -->
+  <section class="brunch" id="brunch" aria-labelledby="brunch-t">
+    <div class="cont">
+      <p class="etq rev">La hora del brunch</p>
+      <h2 id="brunch-t" class="t2 rev">Para compartir sin apuro</h2>
+      <p class="lead rev">Los tres incluyen dos bebidas a elección. Pedilo para llevar o reservá la mesa para tu grupo.</p>
+      <div class="brunch__grid rev" id="brunchGrid"></div>
+      <div class="brunch__pie rev">
+        <button class="btn" type="button" data-reservar>Reservá tu brunch</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EL LUGAR -->
+  <section class="lugar" aria-labelledby="lugar-t">
+    <div class="cont">
+      <p class="etq rev">El lugar</p>
+      <h2 id="lugar-t" class="t2 rev">Pared lila, sillones y la vitrina llena</h2>
+    </div>
+    <div class="fila fila--lugar" id="filaLugar" tabindex="0" aria-label="Fotos del local, deslizá para ver más">
+      <figure class="foto-l"><img src="img/g/pared.webp" alt="Sillones frente a la pared lila del local" loading="lazy" width="700" height="933"></figure>
+      <figure class="foto-l"><img src="img/g/salon.webp" alt="Salón con la vitrina de tortas y el logo de Brest" loading="lazy" width="700" height="933"></figure>
+      <figure class="foto-l"><img src="img/g/vitrina-local.webp" alt="Desayuno con avocado frente a la vitrina" loading="lazy" width="700" height="933"></figure>
+      <figure class="foto-l"><img src="img/g/brunch-mesa.webp" alt="Mesa de brunch en loza azul estampada" loading="lazy" width="700" height="933"></figure>
+      <figure class="foto-l"><img src="img/g/mesa-avocado.webp" alt="Huevos revueltos con tomate y café" loading="lazy" width="700" height="933"></figure>
+      <figure class="foto-l"><img src="img/g/japones.webp" alt="Cheesecake japonés con salsa de chocolate" loading="lazy" width="700" height="933"></figure>
+    </div>
+  </section>
+
+  <!-- LOCALES -->
+  <section class="locales" id="locales" aria-labelledby="loc-t">
+    <div class="cont">
+      <p class="etq rev">Los locales</p>
+      <h2 id="loc-t" class="t2 rev">Dos lugares, la misma vitrina</h2>
+      <p class="lead rev">Abiertos todos los días de 8 a 21 h. 4,8 en Google con más de 270 reseñas.</p>
+      <div class="locales__grid">
+        <article class="local rev" style="--d:0">
+          <img src="img/g/salon.webp" alt="Brest Devoto por dentro" loading="lazy" width="700" height="933">
+          <div class="local__txt">
+            <h3>Devoto</h3>
+            <p>Av. Francisco Beiró 5031</p>
+            <p class="local__extra">Almuerzos y menú del día</p>
+            <div class="local__btns">
+              <a class="btn btn--chico" href="https://wa.me/5491140866128" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="btn btn--linea btn--chico" href="https://www.google.com/maps/search/?api=1&amp;query=Brest+Patisserie+Av.+Francisco+Beir%C3%B3+5031+CABA" target="_blank" rel="noopener">Cómo llegar</a>
+            </div>
+          </div>
+        </article>
+        <article class="local rev" style="--d:1">
+          <img src="img/g/pared.webp" alt="Rincón con sillones de Brest" loading="lazy" width="700" height="933">
+          <div class="local__txt">
+            <h3>Villa Luro</h3>
+            <p>Ramón Falcón 5281</p>
+            <p class="local__extra">WhatsApp: [WHATSAPP]</p>
+            <div class="local__btns">
+              <a class="btn btn--linea btn--chico" href="https://www.google.com/maps/search/?api=1&amp;query=Brest+Patisserie+Ram%C3%B3n+Falc%C3%B3n+5281+CABA" target="_blank" rel="noopener">Cómo llegar</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="cont pie__in">
+    <div class="pie__marca">
+      <img src="img/logo-brest-manteca.svg" alt="brest" width="150" height="40">
+      <p class="pie__lema">Para lo dulce siempre hay lugar.</p>
+    </div>
+    <div class="pie__cols">
+      <div><p class="etq etq--manteca">Devoto</p><p>Av. Francisco Beiró 5031</p></div>
+      <div><p class="etq etq--manteca">Villa Luro</p><p>Ramón Falcón 5281</p></div>
+      <div><p class="etq etq--manteca">Horario</p><p>Todos los días de 8&nbsp;a&nbsp;21&nbsp;h</p></div>
+      <div><p class="etq etq--manteca">Seguinos</p><p><a href="https://www.instagram.com/brest_patisserie/" target="_blank" rel="noopener">@brest_patisserie</a></p></div>
+    </div>
+  </div>
+  <p class="pie__credito">Sitio desarrollado por <a href="https://alejomfernandez.com.ar" target="_blank" rel="noopener">Alejo Martín Fernández</a></p>
+</footer>
+
+<div class="conejo" id="conejo" aria-hidden="true">
+  <span class="conejo__globo" id="conejoGlobo">¡Buena elección!</span>
+  <img src="img/conejo.webp" alt="" width="420" height="441">
+</div>
+
+<script type="module" src="js/main.js?v=1"></script>
+</body>
+</html>
