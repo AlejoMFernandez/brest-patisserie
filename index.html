@@ -28,14 +28,15 @@
 <link rel="preload" href="fonts/nunito-sans.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" as="image" href="img/hero-rogel-800.webp" type="image/webp">
 <link rel="stylesheet" href="kit/kit.css?v=1">
-<link rel="stylesheet" href="css/style.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
 <div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__fondo"></div>
   <div class="intro__stage">
     <svg class="intro__arco" viewBox="0 0 220 300" fill="none"><path d="M20 290V110a90 90 0 0 1 180 0v180" pathLength="1"/></svg>
-    <div class="intro__ventana"><img src="img/hero-rogel-800.webp" alt=""></div>
+    <div class="intro__ventana"><picture><source media="(min-width: 900px)" srcset="img/hero-rogel-1200.webp"><img src="img/hero-rogel-800.webp" alt=""></picture></div>
     <img class="intro__marca" src="img/logo-brest-manteca.svg" alt="">
     <span class="intro__pat">PATISSERIE</span>
   </div>
@@ -84,10 +85,11 @@
   <section class="hero" aria-labelledby="hero-t">
     <div class="hero__foto">
       <span class="hero__arco" aria-hidden="true"></span>
-      <picture>
+      <picture class="hero__pic">
         <source media="(min-width: 900px)" srcset="img/hero-rogel-1200.webp">
         <img src="img/hero-rogel-800.webp" alt="Súper Rogel de seis capas con merengue" width="800" height="930" fetchpriority="high">
       </picture>
+      <img class="hero__chica" src="img/t/red-velvet.webp" alt="Porción de red velvet" width="560" height="746" loading="lazy">
       <a class="sello" href="#vitrina" aria-label="Hoy hay rogel: ver la vitrina"><span>HOY HAY</span><b>rogel</b></a>
     </div>
     <div class="hero__txt">
@@ -106,34 +108,40 @@
         <span class="chip chip--manteca">Sin TACC</span>
         <span class="chip chip--rosa">Keto</span>
       </div>
+      <a class="ahora" id="ahora" href="#carta" style="--d:7">
+        <span class="ahora__cab"><span class="ahora__etq">Ahora en Brest</span><span class="ahora__hora" id="ahoraHora"></span></span>
+        <span class="pizarra" id="pizarra" aria-live="polite">
+          <span class="pizarra__l" data-l="0"></span>
+          <span class="pizarra__l pizarra__l--chica" data-l="1"></span>
+        </span>
+        <span class="ahora__btn"><span id="ahoraBtn">Ver en la carta</span> <span aria-hidden="true">→</span></span>
+      </a>
     </div>
-  </section>
-
-  <!-- PIZARRA -->
-  <section class="pizarra-wrap" aria-label="Aviso del día">
-    <div class="pizarra" id="pizarra" aria-live="polite">
-      <p class="pizarra__l" data-l="0"></p>
-      <p class="pizarra__l" data-l="1"></p>
-      <p class="pizarra__l pizarra__l--chica" data-l="2"></p>
-    </div>
-    <a class="pizarra__btn" id="pizarraBtn" href="#carta">Ver en la carta <span aria-hidden="true">→</span></a>
   </section>
 
   <!-- VITRINA -->
   <section class="vitrina" id="vitrina" aria-labelledby="vitrina-t">
-    <div class="cont">
+    <div class="cont vitrina__cab">
       <p class="etq etq--manteca rev">La vitrina</p>
       <h2 id="vitrina-t" class="t2 t2--manteca rev">Tortas enteras para encargar</h2>
-      <p class="lead lead--claro rev">Deslizá como si caminaras frente a la vitrina. Tocá una para ver qué tiene y encargala para el día que quieras.</p>
+      <p class="lead lead--claro rev">Deslizá la vitrina, elegí tu torta y encargala para el día que quieras.</p>
     </div>
-    <div class="fila fila--vitrina" id="filaVitrina" tabindex="0" aria-label="Tortas enteras, deslizá para ver más"></div>
-    <div class="cont vitrina__pie rev">
-      <div class="flechas">
-        <button class="redondo redondo--claro" data-mover="-1" aria-label="Torta anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <button class="redondo redondo--claro" data-mover="1" aria-label="Torta siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="rueda rev" id="rueda">
+      <div class="rueda__escena" id="ruedaEscena" tabindex="0" role="region" aria-roledescription="carrusel" aria-label="Tortas enteras: arrastrá, deslizá o usá las flechas"></div>
+      <button class="rueda__flecha rueda__flecha--ant" id="ruedaAnt" aria-label="Torta anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="rueda__flecha rueda__flecha--sig" id="ruedaSig" aria-label="Torta siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="cont rueda__info" aria-live="polite">
+      <p class="rueda__num" id="ruedaNum"></p>
+      <h3 class="rueda__nom" id="ruedaNom"></h3>
+      <p class="rueda__desc" id="ruedaDesc"></p>
+      <div class="rueda__acc">
+        <button class="btn btn--manteca" type="button" id="ruedaEncargar">Encargar</button>
+        <span class="rueda__precio" id="ruedaPrecio"></span>
       </div>
-      <p class="vitrina__nota">También hacemos tortas temáticas para cumples. Contanos la idea al encargar.</p>
     </div>
+    <div class="rueda__lista" id="ruedaLista" role="tablist" aria-label="Todas las tortas"></div>
+    <p class="cont vitrina__nota">También hacemos tortas temáticas para cumples. Contanos la idea al encargar.</p>
   </section>
 
   <!-- CARTA -->
@@ -174,7 +182,6 @@
             <img class="caja__logo" src="img/logo-brest-manteca.svg" alt="" aria-hidden="true">
             <div class="caja__slots" id="slots"></div>
           </div>
-          <span class="caja__mono" aria-hidden="true"></span>
         </div>
         <p class="caja__estado" id="cajaEstado">Elegí 6 cosas ricas.</p>
         <div class="dedic" id="dedic" hidden>
@@ -315,6 +322,6 @@
   <img src="img/conejo.webp" alt="" width="420" height="441">
 </div>
 
-<script type="module" src="js/main.js?v=1"></script>
+<script type="module" src="js/main.js?v=2"></script>
 </body>
 </html>

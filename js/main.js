@@ -33,25 +33,44 @@ $$('[data-local]').forEach(b => {
 });
 $('#cartaNota').textContent = `Carta y precios de Brest ${L.nombre}. Todo se puede pedir para retirar en ${L.dir}.`;
 
-/* ---------------- intro ---------------- */
+/* ---------------- intro: el arco se dibuja y la ventana "vuela" al hero ---------------- */
 const conIntro = root.classList.contains('con-intro');
 function arrancar() { root.classList.add('listo'); }
+let introTerminada = false;
+function terminarIntro() {
+  if (introTerminada) return; introTerminada = true;
+  root.classList.remove('con-intro'); root.style.overflow = ''; arrancar();
+}
 if (conIntro) {
   root.style.overflow = 'hidden';
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  scrollTo(0, 0);
+  root.classList.add('desde-intro');
   const t0 = performance.now();
   const desk = esDesk();
-  const fade = desk ? 2050 : 1450, fin = desk ? 2550 : 1950;
-  const img = $('.hero__foto img');
+  const T = desk ? { vuelo: 1750, dur: 680 } : { vuelo: 1350, dur: 520 };
+  const img = $('.hero__pic img');
   const espera = Promise.race([
-    Promise.all([document.fonts ? document.fonts.ready : null, img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })]),
-    new Promise(r => setTimeout(r, 2600)),
+    Promise.all([document.fonts ? document.fonts.ready : null, img.complete ? null : new Promise(r => { img.addEventListener('load', r, { once: true }); img.addEventListener('error', r, { once: true }); })]),
+    new Promise(r => setTimeout(r, 2400)),
   ]);
-  espera.then(() => {
-    const pasado = performance.now() - t0;
-    setTimeout(arrancar, Math.max(0, fade - pasado));
-    setTimeout(() => { root.classList.remove('con-intro'); root.style.overflow = ''; }, Math.max(0, fin - pasado));
-  });
-  setTimeout(() => { root.style.overflow = ''; root.classList.add('listo'); }, 5000);
+  espera.then(() => setTimeout(volar, Math.max(0, T.vuelo - (performance.now() - t0))));
+  function volar() {
+    const v = $('.intro__ventana'), destino = $('.hero__pic');
+    if (!v || !destino || !v.animate) { terminarIntro(); return; }
+    const a = v.getBoundingClientRect(), b = destino.getBoundingClientRect();
+    Object.assign(v.style, { position: 'fixed', left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', right: 'auto', bottom: 'auto', margin: '0' });
+    const opt = { duration: T.dur, easing: 'cubic-bezier(.65,0,.25,1)', fill: 'forwards' };
+    v.animate([
+      { left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' },
+      { left: b.left + 'px', top: b.top + 'px', width: b.width + 'px', height: b.height + 'px', borderBottomLeftRadius: '24px', borderBottomRightRadius: '24px' },
+    ], opt);
+    $('.intro__arco').animate([{ opacity: 1 }, { opacity: 0 }], { duration: T.dur * .5, fill: 'forwards' });
+    $('.intro__fondo').animate([{ opacity: 1 }, { opacity: 0 }], { duration: T.dur, easing: 'ease-in', fill: 'forwards' });
+    setTimeout(arrancar, T.dur * .55);
+    setTimeout(terminarIntro, T.dur + 30);
+  }
+  setTimeout(terminarIntro, 5000);
 } else arrancar();
 
 /* ---------------- entradas al scrollear ---------------- */
@@ -88,19 +107,33 @@ $('#cerrarMenu').addEventListener('click', () => cerrarMenu());
 $$('.menu__links a').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); cerrarMenu(a.getAttribute('href')); }));
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) cerrarMenu(); });
 
-/* ---------------- filas deslizables con mouse ---------------- */
-function arrastrable(fila, alSoltar) {
-  let x0 = 0, s0 = 0, mov = false, activo = false;
-  fila.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button !== 0) return; activo = true; mov = false; x0 = e.clientX; s0 = fila.scrollLeft; });
+/* ---------------- filas deslizables con mouse (fluido en PC) ---------------- */
+function arrastrable(fila, alSoltar, soloCelu) {
+  let x0 = 0, s0 = 0, mov = false, activo = false, raf = 0, xAct = 0, v = 0, tPrev = 0, xPrev = 0;
+  fila.addEventListener('dragstart', (e) => e.preventDefault());
+  fila.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    if (soloCelu && esDesk()) return;
+    e.preventDefault();
+    activo = true; mov = false; x0 = xAct = xPrev = e.clientX; s0 = fila.scrollLeft; v = 0; tPrev = performance.now();
+  });
   addEventListener('pointermove', (e) => {
     if (!activo) return;
-    const dx = e.clientX - x0;
-    if (!mov && Math.abs(dx) > 6) { mov = true; fila.classList.add('arrastra'); }
-    if (mov) fila.scrollLeft = s0 - dx;
+    xAct = e.clientX;
+    const now = performance.now(); v = (xAct - xPrev) / Math.max(1, now - tPrev); xPrev = xAct; tPrev = now;
+    if (!mov && Math.abs(xAct - x0) > 5) { mov = true; fila.classList.add('arrastra'); }
+    if (mov && !raf) raf = requestAnimationFrame(() => { fila.scrollLeft = s0 - (xAct - x0); raf = 0; });
   });
   addEventListener('pointerup', () => {
     if (!activo) return; activo = false;
-    if (mov) { fila.classList.remove('arrastra'); alSoltar && alSoltar(); const tragar = (ev) => { ev.stopPropagation(); ev.preventDefault(); }; fila.addEventListener('click', tragar, { capture: true, once: true }); setTimeout(() => fila.removeEventListener('click', tragar, true), 60); }
+    if (!mov) return;
+    fila.classList.remove('arrastra');
+    // inercia corta según la velocidad del gesto
+    fila.scrollLeft -= v * 120;
+    alSoltar && alSoltar();
+    const tragar = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+    fila.addEventListener('click', tragar, { capture: true, once: true });
+    setTimeout(() => fila.removeEventListener('click', tragar, true), 60);
   });
 }
 function alMasCercano(fila) {
@@ -110,7 +143,7 @@ function alMasCercano(fila) {
   if (mejor) fila.scrollTo({ left: mejor.offsetLeft + mejor.offsetWidth / 2 - fila.clientWidth / 2, behavior: quieto ? 'auto' : 'smooth' });
 }
 const filaLugar = $('#filaLugar');
-arrastrable(filaLugar, () => alMasCercano(filaLugar));
+arrastrable(filaLugar, () => alMasCercano(filaLugar), true);
 
 /* ---------------- helpers de carta ---------------- */
 const TAGS = { sintacc: 'SIN TACC', keto: 'KETO', veggie: 'VEGGIE', casa: 'DE LA CASA' };
@@ -134,16 +167,44 @@ let ctx = null, kit = null, productos = [], categorias = [];
 const money = (n) => ctx ? ctx.money(n) : (n == null ? null : '$' + Number(n).toLocaleString('es-AR'));
 const fotoDe = (p) => (p && p.foto ? (ctx ? ctx.asset(p.foto) : p.foto) : '');
 
+const MAS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+function accionHTML(p) {
+  if (p.categoria === 'tortas-enteras') return `<button type="button" class="btn-encargar" data-encargar="${esc(p.id)}">Encargar</button>`;
+  if (p.disponible === false) return '<span class="kit-badge kit-badge--off">Hoy no hay</span>';
+  if (p.precio == null) return '';
+  return `<button type="button" class="mas" data-kit-add="${esc(p.id)}" aria-label="Sumar ${esc(p.nombre)} a la bandeja"><span class="mas__n" data-cuenta="${esc(p.id)}" aria-hidden="true"></span>${MAS}</button>`;
+}
 function itemHTML(p) {
   const precio = money(p.precio);
   const tags = (p.etiquetas || []).filter(t => TAGS[t]).map(t => `<span class="tg tg--${t}">${TAGS[t]}</span>`).join('');
-  const foto = p.foto ? `<img class="plato__foto" src="${esc(fotoDe(p))}" alt="" loading="lazy" width="58" height="58">` : '';
-  let accion = '';
-  if (p.categoria === 'tortas-enteras') accion = `<button type="button" class="btn-encargar" data-encargar="${esc(p.id)}">Encargar</button>`;
-  else if (p.disponible !== false && p.precio != null) accion = `<div data-kit-qty="${esc(p.id)}"></div>`;
-  return `${foto}<div class="plato__body"><h4 class="plato__nom">${esc(p.nombre)}${tags ? ` <span class="plato__tags">${tags}</span>` : ''}</h4>${p.descripcion ? `<p class="plato__desc">${esc(p.descripcion)}</p>` : ''}<p class="plato__precio${precio ? '' : ' plato__precio--na'}">${precio || 'Consultar'}</p></div>
-    <div class="plato__lado">${accion}${p.disponible === false ? '<span class="kit-badge kit-badge--off">Hoy no hay</span>' : ''}</div>`;
+  const pr = `<span class="plato__precio${precio ? '' : ' plato__precio--na'}">${precio || 'Consultar'}</span>`;
+  if (p.foto) {
+    return `<div class="plato__img"><img src="${esc(fotoDe(p))}" alt="${esc(p.nombre)}" loading="lazy" width="360" height="360"></div>
+      <div class="plato__body"><h4 class="plato__nom">${esc(p.nombre)}</h4>${tags ? `<span class="plato__tags">${tags}</span>` : ''}${p.descripcion ? `<p class="plato__desc">${esc(p.descripcion)}</p>` : ''}
+      <div class="plato__pie">${pr}${accionHTML(p)}</div></div>`;
+  }
+  return `<div class="plato__body"><div class="plato__linea"><h4 class="plato__nom">${esc(p.nombre)}</h4><span class="plato__puntos" aria-hidden="true"></span>${pr}</div>
+    ${tags || p.descripcion ? `<p class="plato__desc">${tags ? `<span class="plato__tags">${tags}</span> ` : ''}${esc(p.descripcion || '')}</p>` : ''}</div>
+    <div class="plato__lado">${accionHTML(p)}</div>`;
 }
+// separa en cada sección los platos con foto (tarjetas arriba) del resto (lista compacta)
+function organizar(cont) {
+  $$('.kit-carta__panel, .lista-pop', cont).concat(cont.matches?.('.lista-pop') ? [cont] : []).forEach(panel => {
+    if ($('.platos-dest', panel)) return;
+    const items = $$(':scope > .kit-item', panel); if (!items.length) return;
+    const dest = document.createElement('div'); dest.className = 'platos-dest';
+    const lista = document.createElement('div'); lista.className = 'platos-lista';
+    items.forEach(it => { if ($('.plato__img', it)) { it.classList.add('plato--foto'); dest.appendChild(it); } else lista.appendChild(it); });
+    if (dest.children.length) panel.appendChild(dest);
+    if (lista.children.length) panel.appendChild(lista);
+  });
+}
+function pintarCuentas() {
+  if (!kit) return;
+  const c = {}; kit.carrito.lineas.forEach(l => { c[l.id] = (c[l.id] || 0) + l.cant; });
+  $$('[data-cuenta]').forEach(s => { const n = c[s.dataset.cuenta] || 0; s.textContent = n || ''; s.parentElement.classList.toggle('tiene', n > 0); });
+}
+document.addEventListener('kit:carrito', () => requestAnimationFrame(pintarCuentas));
 
 /* ---------------- carta: cabecera de sección + anterior / siguiente ---------------- */
 const cartaEl = $('[data-kit="carta"]');
@@ -171,9 +232,11 @@ document.addEventListener('kit:carta', (e) => {
     const cat = cs.find(c => c.id === id); const n = $$('.kit-item', panel).length;
     panel.insertAdjacentHTML('afterbegin', `<header class="sec-cab"><div class="sec-cab__fila"><h3>${esc(cat ? cat.nombre : '')}</h3><span class="sec-cab__n">${n} ${n === 1 ? 'opción' : 'opciones'}</span></div>${NOTAS[id] ? `<p>${esc(NOTAS[id])}</p>` : ''}</header>`);
   });
-  pintarNav();
+  organizar(el);
+  pintarNav(); pintarCuentas();
   pintarVitrina(); pintarBrunch(); pintarBox(); pintarPizarraPrecios();
 });
+
 cartaEl.addEventListener('click', (e) => { if (e.target.closest('.kit-tab')) requestAnimationFrame(pintarNav); });
 nav.addEventListener('click', (e) => {
   const b = e.target.closest('[data-paso]'); if (!b) return;
@@ -186,11 +249,12 @@ nav.addEventListener('click', (e) => {
 });
 document.addEventListener('click', (e) => { const b = e.target.closest('[data-encargar]'); if (b) { e.preventDefault(); abrirEncargo(b.dataset.encargar); } });
 
-/* ---------------- pizarra que sabe qué hora es ---------------- */
+/* ---------------- "Ahora en Brest": la pizarra que sabe qué hora es (dentro del hero) ---------------- */
 function ahoraBA() {
-  const p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/Argentina/Buenos_Aires', hour: 'numeric', hourCycle: 'h23', weekday: 'short' }).formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
-  return { h: Number(p.hour) % 24, dia: p.weekday };
+  const p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/Argentina/Buenos_Aires', hour: 'numeric', minute: '2-digit', hourCycle: 'h23', weekday: 'short' }).formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+  return { h: Number(p.hour) % 24, m: p.minute, dia: p.weekday };
 }
+const DIA_ES = { Mon: 'Lunes', Tue: 'Martes', Wed: 'Miércoles', Thu: 'Jueves', Fri: 'Viernes', Sat: 'Sábado', Sun: 'Domingo' };
 function momento() {
   const m = qs.get('momento'); if (m) return m;
   const { h, dia } = ahoraBA();
@@ -202,19 +266,18 @@ function momento() {
 }
 const pre = (id, def) => { const p = productos.find(x => x.id === id); return (p && money(p.precio)) || def; };
 function textosPizarra() {
-  const m = momento();
   const T = {
-    manana: { l: ['BUEN DÍA', 'DESAYUNOS Y MERIENDAS', `PORTEÑO ${pre('porteno', '$14.500')} · CON BEBIDA Y EXPRIMIDO`], cat: 'desayunos', btn: 'Ver desayunos' },
+    manana: { l: ['DESAYUNOS', `PORTEÑO ${pre('porteno', '$14.500')} · CON BEBIDA Y EXPRIMIDO`], cat: 'desayunos', btn: 'Ver desayunos' },
     mediodia: local === 'devoto'
-      ? { l: ['HOY ALMORZÁS ACÁ', 'MENÚ DEL DÍA DESDE $10.500', 'CON AGUA LIBRE Y CAFÉ'], cat: 'almuerzos', btn: 'Ver almuerzos' }
-      : { l: ['MEDIODÍA EN BREST', 'TARTAS Y ENSALADAS', 'TODO TAMBIÉN PARA LLEVAR'], cat: 'ensaladas', btn: 'Ver tartas y ensaladas' },
-    tarde: { l: ['HORA DE MERENDAR', `PROMO DULCE ${pre('promo-dulce', '$19.500')}`, 'INFUSIÓN + PORCIÓN DE TORTA'], cat: 'desayunos', btn: 'Ver meriendas' },
-    miercoles: { l: ['MIÉRCOLES MUJER', '20% EN TODO', 'EN LA MESA DE MUJERES · CUALQUIER MEDIO DE PAGO'], ancla: '#beneficios', btn: 'Ver beneficios' },
-    noche: { l: ['HOY YA CERRAMOS', 'MAÑANA DESDE LAS 8', 'MIENTRAS TANTO, ENCARGÁ TU TORTA'], ancla: '#vitrina', btn: 'Ver la vitrina' },
+      ? { l: ['MENÚ DEL DÍA', 'DESDE $10.500 · CON AGUA LIBRE Y CAFÉ'], cat: 'almuerzos', btn: 'Ver almuerzos' }
+      : { l: ['TARTAS Y ENSALADAS', 'TODO TAMBIÉN PARA LLEVAR'], cat: 'ensaladas', btn: 'Ver tartas y ensaladas' },
+    tarde: { l: ['PROMO MERIENDA', `INFUSIÓN + PORCIÓN DE TORTA · ${pre('promo-dulce', '$19.500')}`], cat: 'desayunos', btn: 'Ver meriendas' },
+    miercoles: { l: ['MIÉRCOLES MUJER', '20% EN LA MESA DE MUJERES'], ancla: '#beneficios', btn: 'Ver beneficios' },
+    noche: { l: ['HOY YA CERRAMOS', 'MAÑANA DESDE LAS 8 · ENCARGÁ TU TORTA'], ancla: '#vitrina', btn: 'Ver la vitrina' },
   };
-  return T[m] || T.tarde;
+  return T[momento()] || T.tarde;
 }
-let pizarraVista = false;
+let pizarraTxt = '';
 function escribirPizarra(animar) {
   const t = textosPizarra(); let n = 0; pizarraTxt = t.l.join('|');
   $$('.pizarra__l').forEach((p, i) => {
@@ -223,78 +286,114 @@ function escribirPizarra(animar) {
     p.innerHTML = animar ? txt.split(' ').map(w => `<span style="white-space:nowrap" aria-hidden="true">${[...w].map(ch => `<i style="--n:${n++}">${esc(ch)}</i>`).join('')}</span>`).join(' ') : esc(txt);
     n += 2;
   });
-  const b = $('#pizarraBtn');
-  b.firstChild.textContent = t.btn + ' ';
-  b.href = t.ancla || '#carta';
-  b.onclick = t.cat ? (e) => { e.preventDefault(); irACategoria(t.cat); } : null;
+  const a = ahoraBA(); const forzado = qs.get('momento');
+  $('#ahoraHora').textContent = forzado ? '' : `${DIA_ES[a.dia] || ''} · ${String(a.h).padStart(2, '0')}:${a.m}`;
+  $('#ahoraBtn').textContent = t.btn;
+  const link = $('#ahora');
+  link.href = t.ancla || '#carta';
+  link.onclick = t.cat ? (e) => { e.preventDefault(); irACategoria(t.cat); } : null;
 }
-let pizarraTxt = '';
-function pintarPizarraPrecios() { if (!pizarraVista) return; const t = textosPizarra().l.join('|'); if (t !== pizarraTxt) escribirPizarra(false); }
-new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { pizarraVista = true; escribirPizarra(!quieto); o.disconnect(); } }), { threshold: .35 }).observe($('#pizarra'));
+function pintarPizarraPrecios() { const t = textosPizarra().l.join('|'); if (t !== pizarraTxt) escribirPizarra(false); }
+escribirPizarra(false);
+const animarPizarra = () => setTimeout(() => escribirPizarra(!quieto), esDesk() ? 900 : 700);
+if (root.classList.contains('listo')) animarPizarra(); else new MutationObserver((m, o) => { if (root.classList.contains('listo')) { o.disconnect(); animarPizarra(); } }).observe(root, { attributes: true, attributeFilter: ['class'] });
 
-/* ---------------- vitrina ---------------- */
-const filaV = $('#filaVitrina');
-let vitrinaHecha = '';
+/* ---------------- vitrina: rueda infinita de tortas ---------------- */
+const escena = $('#ruedaEscena'), listaR = $('#ruedaLista');
+let tortas = [], cartasR = [], miniR = [], iR = 0, dxR = 0, sxR = null, syR = 0, STEP = 200, cw = 250, firmaR = '', arrastroR = false, ejeR = null;
 function pintarVitrina() {
-  const tortas = productos.filter(p => p.categoria === 'tortas-enteras' && p.disponible !== false);
-  const firma = JSON.stringify(tortas.map(p => [p.id, p.nombre, p.precio, p.foto]));
-  if (firma === vitrinaHecha) return; vitrinaHecha = firma;
-  filaV.innerHTML = tortas.map((p, i) => {
-    const st = (p.etiquetas || []).includes('sintacc');
-    const precio = money(p.precio);
-    return `<div class="torta" data-id="${esc(p.id)}" style="--i:${i}">
-      <div class="torta__in">
-        <button type="button" class="torta__cara" aria-label="${esc(p.nombre)}: ver detalle">
-          <span class="torta__foto"><img src="${esc(fotoDe(p))}" alt="${esc(p.nombre)}" loading="lazy" width="560" height="746"></span>
-          <span class="torta__nom">${esc(p.nombre)}</span>
-          <span class="torta__info"><span>Tocá para ver más</span>${st ? '<span class="torta__tag">SIN TACC</span>' : ''}</span>
-        </button>
-        <div class="torta__dorso" aria-hidden="true">
-          <h3>${esc(p.nombre)}</h3>
-          ${p.descripcion ? `<p>${esc(p.descripcion)}</p>` : ''}
-          <p class="precio${precio ? '' : ' precio--na'}">${precio ? `Desde ${precio}` : 'El precio depende del tamaño: te lo pasamos por WhatsApp.'}</p>
-          <button type="button" class="btn" data-encargar="${esc(p.id)}" tabindex="-1">Encargar</button>
-          <button type="button" class="torta__volver" tabindex="-1">Volver</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  requestAnimationFrame(() => { const ts = $$('.torta', filaV); const i = esDesk() ? Math.min(2, ts.length - 1) : 0; if (ts[i]) { filaV.scrollLeft = ts[i].offsetLeft + ts[i].offsetWidth / 2 - filaV.clientWidth / 2; } escalar(); });
-}
-filaV.addEventListener('click', (e) => {
-  const cara = e.target.closest('.torta__cara'), volver = e.target.closest('.torta__volver');
-  const t = (cara || volver)?.closest('.torta'); if (!t) return;
-  const girar = !!cara;
-  $$('.torta.vuelta', filaV).forEach(x => { if (x !== t) voltear(x, false); });
-  voltear(t, girar);
-  if (girar) t.scrollIntoView({ behavior: quieto ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
-});
-function voltear(t, on) {
-  t.classList.toggle('vuelta', on);
-  $('.torta__dorso', t).setAttribute('aria-hidden', !on);
-  $$('.torta__dorso button', t).forEach(b => { b.tabIndex = on ? 0 : -1; });
-  $('.torta__cara', t).tabIndex = on ? -1 : 0;
-  if (on) setTimeout(() => $('.torta__dorso .btn', t)?.focus({ preventScroll: true }), 350);
-}
-let ticV = false;
-function escalar() {
-  const c = filaV.scrollLeft + filaV.clientWidth / 2; let mejor = null, dmin = Infinity;
-  $$('.torta', filaV).forEach(el => {
-    const m = el.offsetLeft + el.offsetWidth / 2; const d = Math.abs(m - c);
-    const k = Math.min(1, d / (el.offsetWidth * 1.1));
-    el.style.setProperty('--s', (1 - k * .12).toFixed(3)); el.style.setProperty('--o', (1 - k * .35).toFixed(3));
-    if (d < dmin) { dmin = d; mejor = el; }
+  const nuevas = productos.filter(p => p.categoria === 'tortas-enteras' && p.disponible !== false);
+  const firma = JSON.stringify(nuevas.map(p => [p.id, p.nombre, p.precio, p.foto, p.descripcion]));
+  if (firma === firmaR) return; firmaR = firma; tortas = nuevas;
+  escena.innerHTML = ''; listaR.innerHTML = '';
+  cartasR = tortas.map((p, k) => {
+    const c = document.createElement('button'); c.type = 'button'; c.className = 'rcarta'; c.dataset.k = k;
+    c.setAttribute('aria-label', p.nombre);
+    c.innerHTML = `<img src="${esc(fotoDe(p))}" alt="" width="560" height="746" draggable="false" loading="${k < 3 || k > tortas.length - 3 ? 'eager' : 'lazy'}">${(p.etiquetas || []).includes('sintacc') ? '<span class="rcarta__tag">SIN TACC</span>' : ''}`;
+    escena.appendChild(c); return c;
   });
-  $$('.torta.centro', filaV).forEach(x => x !== mejor && x.classList.remove('centro')); mejor?.classList.add('centro');
+  miniR = tortas.map((p, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'rmini'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', p.nombre); b.dataset.k = k;
+    b.innerHTML = `<img src="${esc(fotoDe(p))}" alt="" width="56" height="56" loading="lazy" draggable="false">`;
+    listaR.appendChild(b); return b;
+  });
+  iR = Math.min(iR, Math.max(0, tortas.length - 1));
+  medirR(); infoR(false);
 }
-filaV.addEventListener('scroll', () => { if (ticV) return; ticV = true; requestAnimationFrame(() => { escalar(); ticV = false; }); }, { passive: true });
-addEventListener('resize', escalar, { passive: true });
-arrastrable(filaV, () => alMasCercano(filaV));
-$$('[data-mover]').forEach(b => b.addEventListener('click', () => {
-  const t = $('.torta', filaV); if (!t) return;
-  filaV.scrollBy({ left: Number(b.dataset.mover) * (t.offsetWidth + 16), behavior: quieto ? 'auto' : 'smooth' });
-}));
-filaV.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); $(`[data-mover="${e.key === 'ArrowRight' ? 1 : -1}"]`).click(); } });
+function medirR() {
+  const w = escena.clientWidth || innerWidth;
+  if (esDesk()) { cw = Math.max(240, Math.min(340, w * .25, (innerHeight - 330) * .75)); STEP = cw * .98; }
+  else { cw = Math.min(250, w * .6); STEP = cw * .74; }
+  escena.parentElement.style.setProperty('--cw', cw.toFixed(0) + 'px');
+  layoutR();
+}
+function layoutR() {
+  const N = cartasR.length; if (!N) return;
+  cartasR.forEach((c, k) => {
+    let s = (k - iR + N) % N; if (s > N / 2) s -= N;
+    const p = s + dxR / STEP, a = Math.abs(p), q = Math.min(a, 1);
+    const sc = a <= 1 ? 1 - .3 * q : Math.max(.42, .7 - .14 * (a - 1));
+    const x = (p < 0 ? -1 : 1) * (a <= 1 ? a * STEP : STEP + (a - 1) * STEP * .62);
+    const op = a < 1.6 ? 1 - .15 * q : Math.max(0, .85 - (a - 1.6) * 1.1);
+    c.style.transform = `translateX(-50%) translateX(${x.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+    c.style.opacity = op.toFixed(2);
+    c.style.zIndex = String(100 - Math.round(a * 10));
+    c.style.setProperty('--sombra', (1 - q).toFixed(2));
+    c.classList.toggle('centro', a < .5);
+    c.tabIndex = a < .5 ? 0 : -1;
+    c.setAttribute('aria-hidden', a > 1.5 ? 'true' : 'false');
+  });
+}
+function infoR(animar = true) {
+  const p = tortas[iR]; if (!p) return;
+  const precio = money(p.precio);
+  $('#ruedaNum').textContent = `${String(iR + 1).padStart(2, '0')} / ${String(tortas.length).padStart(2, '0')}`;
+  $('#ruedaNom').textContent = p.nombre;
+  $('#ruedaDesc').textContent = p.descripcion || 'Torta entera, hecha en Brest.';
+  $('#ruedaPrecio').textContent = precio ? `Desde ${precio}` : 'Precio según tamaño: te lo pasamos por WhatsApp';
+  $('#ruedaEncargar').dataset.encargar = p.id;
+  $('#ruedaEncargar').textContent = `Encargar ${p.nombre}`;
+  if (animar) { const n = $('.rueda__info'); n.classList.remove('cambia'); void n.offsetWidth; n.classList.add('cambia'); }
+  miniR.forEach((m, k) => { const on = k === iR; m.setAttribute('aria-selected', on); m.classList.toggle('on', on); });
+  const m = miniR[iR];
+  if (m && listaR.scrollWidth > listaR.clientWidth) listaR.scrollTo({ left: m.offsetLeft - listaR.clientWidth / 2 + m.offsetWidth / 2, behavior: quieto ? 'auto' : 'smooth' });
+}
+function irR(d) { const N = tortas.length; if (!N) return; iR = ((iR + d) % N + N) % N; dxR = 0; escena.classList.remove('arrastra'); layoutR(); infoR(); }
+$('#ruedaAnt').addEventListener('click', () => irR(-1));
+$('#ruedaSig').addEventListener('click', () => irR(1));
+escena.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); irR(-1); } if (e.key === 'ArrowRight') { e.preventDefault(); irR(1); } });
+listaR.addEventListener('click', (e) => { const m = e.target.closest('.rmini'); if (!m) return; const N = tortas.length; let d = Number(m.dataset.k) - iR; if (d > N / 2) d -= N; if (d < -N / 2) d += N; irR(d); });
+escena.addEventListener('dragstart', (e) => e.preventDefault());
+escena.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  sxR = e.clientX; syR = e.clientY; dxR = 0; arrastroR = false; ejeR = e.pointerType === 'mouse' ? 'x' : null;
+  if (e.pointerType === 'mouse') e.preventDefault();
+});
+escena.addEventListener('pointermove', (e) => {
+  if (sxR === null) return;
+  const dx = e.clientX - sxR, dy = e.clientY - syR;
+  if (!ejeR) { if (Math.abs(dx) > 8 || Math.abs(dy) > 8) ejeR = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; else return; }
+  if (ejeR === 'y') { sxR = null; return; }
+  if (!arrastroR && Math.abs(dx) > 4) { arrastroR = true; escena.classList.add('arrastra'); try { escena.setPointerCapture(e.pointerId); } catch (_) { /* nada */ } }
+  dxR = Math.max(-STEP * 2.2, Math.min(STEP * 2.2, dx));
+  layoutR();
+});
+function finR() {
+  if (sxR === null) return; sxR = null;
+  if (!arrastroR) return;
+  const pasos = Math.round(-dxR / STEP) || (Math.abs(dxR) > STEP * .16 ? (dxR < 0 ? 1 : -1) : 0);
+  if (pasos) irR(pasos); else { dxR = 0; escena.classList.remove('arrastra'); layoutR(); }
+  setTimeout(() => { arrastroR = false; }, 0);
+}
+escena.addEventListener('pointerup', finR);
+escena.addEventListener('pointercancel', finR);
+escena.addEventListener('click', (e) => {
+  if (arrastroR) return;
+  const c = e.target.closest('.rcarta'); if (!c) return;
+  const N = tortas.length; let d = Number(c.dataset.k) - iR; if (d > N / 2) d -= N; if (d < -N / 2) d += N;
+  if (d) irR(d); else abrirEncargo(tortas[iR].id);
+});
+addEventListener('resize', () => medirR(), { passive: true });
 
 /* ---------------- encargo de torta entera ---------------- */
 const DIAS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
@@ -486,8 +585,9 @@ $$('[data-lista]').forEach(b => b.addEventListener('click', () => {
   const box = document.createElement('div'); box.className = 'carta__kit lista-pop';
   box.innerHTML = `<p class="sec-cab" style="margin:0"><span style="font-size:15px;color:#5A3450">${lista.length} opciones en Brest ${esc(L.nombre)}.${tag === 'sintacc' ? ' Avisá al pedir para que lo preparen aparte.' : ''}</span></p>` +
     lista.map(p => `<article class="kit-item plato" data-id="${esc(p.id)}">${itemHTML(p)}</article>`).join('');
+  organizar(box);
   popup({ titulo: tag === 'sintacc' ? 'Todo sin TACC' : 'Opciones keto', contenido: box, clase: 'kit-pop--resv' });
-  kit.carrito.sync(box);
+  pintarCuentas();
 }));
 
 /* ---------------- brunch ---------------- */
@@ -499,9 +599,9 @@ function pintarBrunch() {
       <div class="bru__fila"><h3>${esc(p.nombre)}</h3><span class="plato__precio">${money(p.precio) || 'Consultar'}</span></div>
       ${(p.etiquetas || []).includes('sintacc') ? '<span class="tg" style="justify-self:start">SIN TACC</span>' : ''}
       <p>${esc(p.descripcion || '')}</p>
-      <div class="bru__acc"><button type="button" class="btn btn--linea btn--chico" data-reservar="${esc(p.nombre)}">Reservar</button>${p.precio != null ? `<div data-kit-qty="${esc(p.id)}"></div>` : ''}</div>
+      <div class="bru__acc"><button type="button" class="btn btn--linea btn--chico" data-reservar="${esc(p.nombre)}">Reservar</button>${accionHTML(p)}</div>
     </div></article>`).join('');
-  kit?.carrito.sync($('#brunchGrid'));
+  pintarCuentas();
 }
 document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-reservar]'); if (!b || !kit?.reservas) return;
@@ -517,8 +617,8 @@ const FRASES = ['¡Buena elección!', '¡Qué rico!', 'Va a la bandeja', '¡Me e
 function asomar(txt) {
   if (quieto) return;
   $('#conejoGlobo').textContent = txt || FRASES[Math.floor(Math.random() * FRASES.length)];
-  conejo.classList.remove('asoma'); void conejo.offsetWidth; conejo.classList.add('asoma');
-  clearTimeout(tConejo); tConejo = setTimeout(() => conejo.classList.remove('asoma'), 2600);
+  conejo.classList.remove('asoma'); void conejo.offsetWidth; conejo.classList.add('asoma'); root.classList.add('conejo-arriba');
+  clearTimeout(tConejo); tConejo = setTimeout(() => { conejo.classList.remove('asoma'); root.classList.remove('conejo-arriba'); }, 2800);
 }
 let ultimo = 0;
 document.addEventListener('kit:carrito', (e) => { if (e.detail.delta > 0 && performance.now() - ultimo > 3500) { ultimo = performance.now(); asomar(); } });
@@ -537,7 +637,7 @@ try {
   chip.classList.toggle('abierto', est.abierto);
   chip.lastChild.textContent = est.abierto ? `Abierto · hasta las ${est.cierra}` : `Cerrado · abre${est.abre ? ` a las ${est.abre}` : ' mañana a las 08:00'}`;
   pintarPizarraPrecios();
-  kit.carrito.listo.then(() => { pintarBrunch(); kit.carrito.sync(); });
+  kit.carrito.listo.then(() => { pintarBrunch(); pintarCuentas(); });
 } catch (err) {
   console.error('[brest] kit', err);
 }
