@@ -28,7 +28,7 @@
 <link rel="preload" href="fonts/nunito-sans.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" as="image" href="img/hero-rogel-800.webp" type="image/webp">
 <link rel="stylesheet" href="kit/kit.css?v=1">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -108,14 +108,6 @@
         <span class="chip chip--manteca">Sin TACC</span>
         <span class="chip chip--rosa">Keto</span>
       </div>
-      <a class="ahora" id="ahora" href="#carta" style="--d:7">
-        <span class="ahora__cab"><span class="ahora__etq">Ahora en Brest</span><span class="ahora__hora" id="ahoraHora"></span></span>
-        <span class="pizarra" id="pizarra" aria-live="polite">
-          <span class="pizarra__l" data-l="0"></span>
-          <span class="pizarra__l pizarra__l--chica" data-l="1"></span>
-        </span>
-        <span class="ahora__btn"><span id="ahoraBtn">Ver en la carta</span> <span aria-hidden="true">→</span></span>
-      </a>
     </div>
   </section>
 
@@ -184,8 +176,8 @@
           </div>
         </div>
         <p class="caja__estado" id="cajaEstado">Elegí 6 cosas ricas.</p>
-        <div class="dedic" id="dedic" hidden>
-          <label for="dedicTxt">Tarjeta con dedicatoria</label>
+        <div class="dedic" id="dedic">
+          <label for="dedicTxt">Tarjeta con dedicatoria <span>(opcional)</span></label>
           <textarea id="dedicTxt" rows="2" maxlength="140" placeholder="Feliz cumple, ma. Para lo dulce siempre hay lugar."></textarea>
         </div>
         <div class="box__acc">
@@ -322,6 +314,6 @@
   <img src="img/conejo.webp" alt="" width="420" height="441">
 </div>
 
-<script type="module" src="js/main.js?v=2"></script>
+<script type="module" src="js/main.js?v=3"></script>
 </body>
 </html>

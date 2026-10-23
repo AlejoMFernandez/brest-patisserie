@@ -67,7 +67,7 @@ if (conIntro) {
     ], opt);
     $('.intro__arco').animate([{ opacity: 1 }, { opacity: 0 }], { duration: T.dur * .5, fill: 'forwards' });
     $('.intro__fondo').animate([{ opacity: 1 }, { opacity: 0 }], { duration: T.dur, easing: 'ease-in', fill: 'forwards' });
-    setTimeout(arrancar, T.dur * .55);
+    setTimeout(arrancar, T.dur * .8);
     setTimeout(terminarIntro, T.dur + 30);
   }
   setTimeout(terminarIntro, 5000);
@@ -234,7 +234,7 @@ document.addEventListener('kit:carta', (e) => {
   });
   organizar(el);
   pintarNav(); pintarCuentas();
-  pintarVitrina(); pintarBrunch(); pintarBox(); pintarPizarraPrecios();
+  pintarVitrina(); pintarBrunch(); pintarBox();
 });
 
 cartaEl.addEventListener('click', (e) => { if (e.target.closest('.kit-tab')) requestAnimationFrame(pintarNav); });
@@ -249,54 +249,6 @@ nav.addEventListener('click', (e) => {
 });
 document.addEventListener('click', (e) => { const b = e.target.closest('[data-encargar]'); if (b) { e.preventDefault(); abrirEncargo(b.dataset.encargar); } });
 
-/* ---------------- "Ahora en Brest": la pizarra que sabe qué hora es (dentro del hero) ---------------- */
-function ahoraBA() {
-  const p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/Argentina/Buenos_Aires', hour: 'numeric', minute: '2-digit', hourCycle: 'h23', weekday: 'short' }).formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
-  return { h: Number(p.hour) % 24, m: p.minute, dia: p.weekday };
-}
-const DIA_ES = { Mon: 'Lunes', Tue: 'Martes', Wed: 'Miércoles', Thu: 'Jueves', Fri: 'Viernes', Sat: 'Sábado', Sun: 'Domingo' };
-function momento() {
-  const m = qs.get('momento'); if (m) return m;
-  const { h, dia } = ahoraBA();
-  if (h < 8 || h >= 21) return 'noche';
-  if (dia === 'Wed') return 'miercoles';
-  if (h < 12) return 'manana';
-  if (h < 16) return 'mediodia';
-  return 'tarde';
-}
-const pre = (id, def) => { const p = productos.find(x => x.id === id); return (p && money(p.precio)) || def; };
-function textosPizarra() {
-  const T = {
-    manana: { l: ['DESAYUNOS', `PORTEÑO ${pre('porteno', '$14.500')} · CON BEBIDA Y EXPRIMIDO`], cat: 'desayunos', btn: 'Ver desayunos' },
-    mediodia: local === 'devoto'
-      ? { l: ['MENÚ DEL DÍA', 'DESDE $10.500 · CON AGUA LIBRE Y CAFÉ'], cat: 'almuerzos', btn: 'Ver almuerzos' }
-      : { l: ['TARTAS Y ENSALADAS', 'TODO TAMBIÉN PARA LLEVAR'], cat: 'ensaladas', btn: 'Ver tartas y ensaladas' },
-    tarde: { l: ['PROMO MERIENDA', `INFUSIÓN + PORCIÓN DE TORTA · ${pre('promo-dulce', '$19.500')}`], cat: 'desayunos', btn: 'Ver meriendas' },
-    miercoles: { l: ['MIÉRCOLES MUJER', '20% EN LA MESA DE MUJERES'], ancla: '#beneficios', btn: 'Ver beneficios' },
-    noche: { l: ['HOY YA CERRAMOS', 'MAÑANA DESDE LAS 8 · ENCARGÁ TU TORTA'], ancla: '#vitrina', btn: 'Ver la vitrina' },
-  };
-  return T[momento()] || T.tarde;
-}
-let pizarraTxt = '';
-function escribirPizarra(animar) {
-  const t = textosPizarra(); let n = 0; pizarraTxt = t.l.join('|');
-  $$('.pizarra__l').forEach((p, i) => {
-    const txt = t.l[i] || '';
-    p.setAttribute('aria-label', txt);
-    p.innerHTML = animar ? txt.split(' ').map(w => `<span style="white-space:nowrap" aria-hidden="true">${[...w].map(ch => `<i style="--n:${n++}">${esc(ch)}</i>`).join('')}</span>`).join(' ') : esc(txt);
-    n += 2;
-  });
-  const a = ahoraBA(); const forzado = qs.get('momento');
-  $('#ahoraHora').textContent = forzado ? '' : `${DIA_ES[a.dia] || ''} · ${String(a.h).padStart(2, '0')}:${a.m}`;
-  $('#ahoraBtn').textContent = t.btn;
-  const link = $('#ahora');
-  link.href = t.ancla || '#carta';
-  link.onclick = t.cat ? (e) => { e.preventDefault(); irACategoria(t.cat); } : null;
-}
-function pintarPizarraPrecios() { const t = textosPizarra().l.join('|'); if (t !== pizarraTxt) escribirPizarra(false); }
-escribirPizarra(false);
-const animarPizarra = () => setTimeout(() => escribirPizarra(!quieto), esDesk() ? 900 : 700);
-if (root.classList.contains('listo')) animarPizarra(); else new MutationObserver((m, o) => { if (root.classList.contains('listo')) { o.disconnect(); animarPizarra(); } }).observe(root, { attributes: true, attributeFilter: ['class'] });
 
 /* ---------------- vitrina: rueda infinita de tortas ---------------- */
 const escena = $('#ruedaEscena'), listaR = $('#ruedaLista');
@@ -492,7 +444,6 @@ function pintarSlots(nuevo = -1) {
   const total = enCaja.reduce((s, id) => s + (productos.find(p => p.id === id)?.precio || 0), 0);
   $('#cajaEstado').textContent = enCaja.length ? `${enCaja.length} de ${MAX} · ${money(total)}${enCaja.length < 3 ? ' · con 3 ya la podés cerrar' : ''}` : 'Elegí hasta 6 cosas ricas.';
   $('#boxCerrar').disabled = enCaja.length < 3;
-  $('#dedic').hidden = enCaja.length < 3;
   $$('.opt').forEach(o => o.classList.toggle('no', enCaja.length >= MAX));
 }
 function sumarABox(id, desde) {
@@ -636,7 +587,7 @@ try {
   const chip = $('#estado');
   chip.classList.toggle('abierto', est.abierto);
   chip.lastChild.textContent = est.abierto ? `Abierto · hasta las ${est.cierra}` : `Cerrado · abre${est.abre ? ` a las ${est.abre}` : ' mañana a las 08:00'}`;
-  pintarPizarraPrecios();
+ 
   kit.carrito.listo.then(() => { pintarBrunch(); pintarCuentas(); });
 } catch (err) {
   console.error('[brest] kit', err);
