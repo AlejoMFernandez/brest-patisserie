@@ -10,8 +10,8 @@
   if (!/\/$|\.html$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);
 </script>
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../kit/kit.css?v=1">
-<link rel="stylesheet" href="../kit/admin/admin.css?v=1">
+<link rel="stylesheet" href="../kit/kit.css?v=18">
+<link rel="stylesheet" href="../kit/admin/admin.css?v=18">
 <style>
 @font-face { font-family: 'Gloock'; src: url('../fonts/gloock.woff') format('woff'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Chonburi'; src: url('../fonts/chonburi.woff') format('woff'); font-weight: 400; font-display: swap; }
@@ -31,7 +31,7 @@
   <a href="./?local=luro" data-l="luro">Villa Luro</a>
 </nav>
 <script type="module">
-  import { initAdmin } from '../kit/admin/admin.js?v=1';
+  import { initAdmin } from '../kit/admin/admin.js?v=18';
   const local = new URLSearchParams(location.search).get('local') === 'luro' ? 'luro' : 'devoto';
   document.querySelectorAll('.brest-local a').forEach(a => { a.classList.toggle('on', a.dataset.l === local); if (a.dataset.l === local) a.setAttribute('aria-current', 'page'); });
   const nav = document.querySelector('.brest-local');

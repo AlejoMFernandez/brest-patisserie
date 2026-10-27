@@ -1,5 +1,5 @@
 // Brest Patisserie · demo · Alejo Martín Fernández
-import { initKit } from '../kit/kit.js?v=1';
+import { initKit } from '../kit/kit.js?v=18';
 import { popup, toast } from '../kit/core/ui.js';
 import { linkWhatsApp } from '../kit/core/pedidos.js';
 import { esc, telValido } from '../kit/core/util.js';
